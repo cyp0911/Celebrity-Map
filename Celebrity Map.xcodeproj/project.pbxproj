@@ -17,6 +17,9 @@
 		3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */; };
 		3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40D20D07A1C008DD653 /* MapKit.framework */; };
 		3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40F20D07B3C008DD653 /* CoreLocation.framework */; };
+		3D9C9A5120D1AF5A0013F09B /* CelebrityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C9A5020D1AF5A0013F09B /* CelebrityDetailView.swift */; };
+		3D9C9A5320D1B05D0013F09B /* CelebrityDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9C9A5220D1B05D0013F09B /* CelebrityDetailView.xib */; };
+		3D9C9A5520D1C7340013F09B /* CelebrityCalloutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C9A5420D1C7340013F09B /* CelebrityCalloutViewModel.swift */; };
 		F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +36,9 @@
 		3D82E40320D0741A008DD653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D82E40D20D07A1C008DD653 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3D82E40F20D07B3C008DD653 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3D9C9A5020D1AF5A0013F09B /* CelebrityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrityDetailView.swift; sourceTree = "<group>"; };
+		3D9C9A5220D1B05D0013F09B /* CelebrityDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CelebrityDetailView.xib; sourceTree = "<group>"; };
+		3D9C9A5420D1C7340013F09B /* CelebrityCalloutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrityCalloutViewModel.swift; sourceTree = "<group>"; };
 		8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.release.xcconfig"; sourceTree = "<group>"; };
 		A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celebrity_Map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +120,9 @@
 		3D82E40B20D07455008DD653 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D9C9A5020D1AF5A0013F09B /* CelebrityDetailView.swift */,
+				3D9C9A5220D1B05D0013F09B /* CelebrityDetailView.xib */,
+				3D9C9A5420D1C7340013F09B /* CelebrityCalloutViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */,
+				3D9C9A5320D1B05D0013F09B /* CelebrityDetailView.xib in Resources */,
 				3D82E3FF20D0741A008DD653 /* Assets.xcassets in Resources */,
 				3D82E3FA20D07418008DD653 /* Main.storyboard in Resources */,
 			);
@@ -237,12 +247,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MapViewPlus/MapViewPlus.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapViewPlus.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -261,8 +275,10 @@
 				3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */,
 				3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */,
 				3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */,
+				3D9C9A5520D1C7340013F09B /* CelebrityCalloutViewModel.swift in Sources */,
 				3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */,
 				3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */,
+				3D9C9A5120D1AF5A0013F09B /* CelebrityDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

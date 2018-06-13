@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GAy-Ao-osI">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GAy-Ao-osI" customClass="MapViewPlus" customModule="MapViewPlus">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szv-n7-OOm">
@@ -47,6 +47,7 @@
                     <navigationItem key="navigationItem" title="My location" id="DLk-Qt-Ok5"/>
                     <connections>
                         <outlet property="MainMapView" destination="GAy-Ao-osI" id="ov2-PY-2po"/>
+                        <outlet property="MainMapViewPlus" destination="GAy-Ao-osI" id="8Pa-oe-w5Q"/>
                         <outlet property="locateMeOutlet" destination="Szv-n7-OOm" id="Wrw-eq-ZZN"/>
                     </connections>
                 </viewController>

@@ -16,6 +16,7 @@ class Celebrity: NSObject {
     var hometownLatlng : CLLocation?
     var title : String = ""
     var hometown : String?
+    var portrait : UIImage?
     
     override init(){}
     
