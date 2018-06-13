@@ -100,6 +100,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         geocodingHometown(celebrity: Celebrity(name: "Chenyinpeng", hometown: "huanggang", title: "APP Coder"))
         geocodingHometown(celebrity: Celebrity(name: "Lebron James", hometown: "Akron,OH", title: "NBA Star"))
         geocodingHometown(celebrity: Celebrity(name: "Donald Trump", hometown: "New-York-City", title: "US president"))
+        geocodingHometown(celebrity: Celebrity(name: "Russell Westbrook", hometown: "Long Beach, California", title: "NBA Star"))
+        geocodingHometown(celebrity: Celebrity(name: "Jackie Chan", hometown: "Victoria Peak, British Hong Kong", title: "Actor"))
+        geocodingHometown(celebrity: Celebrity(name: "Isaac Newton", hometown: "Woolsthorpe, Lincolnshire, England", title: "Scientist"))
+
 
     }
     
@@ -118,7 +122,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         // A object used to append an entry to Array
         let celebrityDataModel = Celebrity()
         
-        let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(celebrity.hometown ?? "beijing")&key=AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
+        let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(celebrity.hometown?.replacingOccurrences(of: " ", with: "-") ?? "beijing")&key=AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
         
         celebrityDataModel.name = celebrity.name
         celebrityDataModel.title = celebrity.title
