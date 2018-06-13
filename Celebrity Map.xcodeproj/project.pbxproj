@@ -7,23 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FB20D097D100E9B886 /* ButtonClicked.swift */; };
+		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
 		3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F420D07418008DD653 /* AppDelegate.swift */; };
-		3D82E3F720D07418008DD653 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F620D07418008DD653 /* ViewController.swift */; };
+		3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F620D07418008DD653 /* WelcomeViewController.swift */; };
 		3D82E3FA20D07418008DD653 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E3F820D07418008DD653 /* Main.storyboard */; };
 		3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3FB20D07418008DD653 /* Celebrity_Map.xcdatamodeld */; };
 		3D82E3FF20D0741A008DD653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E3FE20D0741A008DD653 /* Assets.xcassets */; };
 		3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */; };
+		3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40D20D07A1C008DD653 /* MapKit.framework */; };
+		3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40F20D07B3C008DD653 /* CoreLocation.framework */; };
+		F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D6488FB20D097D100E9B886 /* ButtonClicked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonClicked.swift; sourceTree = "<group>"; };
+		3D6488FD20D09E9F00E9B886 /* Celebrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebrity.swift; sourceTree = "<group>"; };
 		3D82E3F120D07418008DD653 /* Celebrity Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Celebrity Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D82E3F420D07418008DD653 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D82E3F620D07418008DD653 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3D82E3F620D07418008DD653 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		3D82E3F920D07418008DD653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D82E3FC20D07418008DD653 /* Celebrity_Map.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Celebrity_Map.xcdatamodel; sourceTree = "<group>"; };
 		3D82E3FE20D0741A008DD653 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D82E40120D0741A008DD653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D82E40320D0741A008DD653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D82E40D20D07A1C008DD653 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3D82E40F20D07B3C008DD653 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.release.xcconfig"; sourceTree = "<group>"; };
+		A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celebrity_Map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +43,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */,
+				3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */,
+				F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D6488FA20D097BA00E9B886 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				3D6488FB20D097D100E9B886 /* ButtonClicked.swift */,
+				3D6488FD20D09E9F00E9B886 /* Celebrity.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
 		3D82E3E820D07418008DD653 = {
 			isa = PBXGroup;
 			children = (
 				3D82E3F320D07418008DD653 /* Celebrity Map */,
 				3D82E3F220D07418008DD653 /* Products */,
+				3D82E40C20D07A1C008DD653 /* Frameworks */,
+				8904F08982169E01FE4F2343 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +82,59 @@
 		3D82E3F320D07418008DD653 /* Celebrity Map */ = {
 			isa = PBXGroup;
 			children = (
+				3D6488FA20D097BA00E9B886 /* Extentions */,
+				3D82E40B20D07455008DD653 /* Model */,
+				3D82E40A20D07453008DD653 /* View */,
+				3D82E40920D0744F008DD653 /* Controller */,
 				3D82E3F420D07418008DD653 /* AppDelegate.swift */,
-				3D82E3F620D07418008DD653 /* ViewController.swift */,
-				3D82E3F820D07418008DD653 /* Main.storyboard */,
 				3D82E3FE20D0741A008DD653 /* Assets.xcassets */,
 				3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */,
 				3D82E40320D0741A008DD653 /* Info.plist */,
 				3D82E3FB20D07418008DD653 /* Celebrity_Map.xcdatamodeld */,
 			);
 			path = "Celebrity Map";
+			sourceTree = "<group>";
+		};
+		3D82E40920D0744F008DD653 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D82E3F620D07418008DD653 /* WelcomeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3D82E40A20D07453008DD653 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D82E3F820D07418008DD653 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3D82E40B20D07455008DD653 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3D82E40C20D07A1C008DD653 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D82E40F20D07B3C008DD653 /* CoreLocation.framework */,
+				3D82E40D20D07A1C008DD653 /* MapKit.framework */,
+				A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8904F08982169E01FE4F2343 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */,
+				8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +144,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D82E40620D0741A008DD653 /* Build configuration list for PBXNativeTarget "Celebrity Map" */;
 			buildPhases = (
+				4E723230A56577BC25E4C94B /* [CP] Check Pods Manifest.lock */,
 				3D82E3ED20D07418008DD653 /* Sources */,
 				3D82E3EE20D07418008DD653 /* Frameworks */,
 				3D82E3EF20D07418008DD653 /* Resources */,
+				5CE011FDEB7DF9CB2E7886EF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -99,6 +171,11 @@
 				TargetAttributes = {
 					3D82E3F020D07418008DD653 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -133,12 +210,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4E723230A56577BC25E4C94B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Celebrity Map-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CE011FDEB7DF9CB2E7886EF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3D82E3ED20D07418008DD653 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D82E3F720D07418008DD653 /* ViewController.swift in Sources */,
+				3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */,
+				3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */,
+				3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */,
 				3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */,
 				3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */,
 			);
@@ -282,6 +404,7 @@
 		};
 		3D82E40720D0741A008DD653 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +423,7 @@
 		};
 		3D82E40820D0741A008DD653 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
