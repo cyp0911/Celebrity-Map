@@ -107,6 +107,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
+    
     //MARK - Set annotation from all data in array
     func loadCelebrityAnnotation() -> Void {
         print("Array\(celebrityArray.count)")

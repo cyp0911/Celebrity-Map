@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>962588434332-2v72c12rrd8hn4n8u84cqov2ulh94p71.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.962588434332-2v72c12rrd8hn4n8u84cqov2ulh94p71</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDY_ZateXIxlOknfN1Ou897yhWrTCvzzs0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>962588434332</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.yinpeng.Celebrity-Map</string>
+	<key>PROJECT_ID</key>
+	<string>celebrity-map-1528853526054</string>
+	<key>STORAGE_BUCKET</key>
+	<string>celebrity-map-1528853526054.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:962588434332:ios:ef22d7f442db9324</string>
+	<key>DATABASE_URL</key>
+	<string>https://celebrity-map-1528853526054.firebaseio.com</string>
+</dict>
+</plist>

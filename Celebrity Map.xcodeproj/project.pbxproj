@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */; };
 		3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FB20D097D100E9B886 /* ButtonClicked.swift */; };
 		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
 		3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F420D07418008DD653 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D6488FB20D097D100E9B886 /* ButtonClicked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonClicked.swift; sourceTree = "<group>"; };
 		3D6488FD20D09E9F00E9B886 /* Celebrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebrity.swift; sourceTree = "<group>"; };
 		3D82E3F120D07418008DD653 /* Celebrity Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Celebrity Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				3D82E3FE20D0741A008DD653 /* Assets.xcassets */,
 				3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */,
 				3D82E40320D0741A008DD653 /* Info.plist */,
+				3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */,
 				3D82E3FB20D07418008DD653 /* Celebrity_Map.xcdatamodeld */,
 			);
 			path = "Celebrity Map";
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */,
+				3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */,
 				3D82E3FF20D0741A008DD653 /* Assets.xcassets in Resources */,
 				3D82E3FA20D07418008DD653 /* Main.storyboard in Resources */,
 			);
@@ -237,14 +241,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
