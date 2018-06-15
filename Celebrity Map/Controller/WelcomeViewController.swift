@@ -106,10 +106,14 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     //MARK - Load Celebrity data
-    func loadCelebrity() {
+    func loadCelebrity(category: Int = 0) {
 
+        let items = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
 
         let celebrityRef = roofRef.child("celebrity")
+        
+        if category == 0 {
+        
         celebrityRef.observe(.value) { snapshot in
             self.celebrityArray.removeAll()
             let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
@@ -125,6 +129,25 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
             
             self.loadCelebrityAnnotation()
 
+        }
+        }else{
+            celebrityRef.queryOrdered(byChild: "category").queryEqual(toValue: items[category]).observe(.value) { snapshot in
+                self.celebrityArray.removeAll()
+                let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
+                for(key, _) in celebrityDictionaries{
+                    if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
+                        
+                        if let newname = celebrityDictionary["title"]{
+                            let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String)
+                            self.celebrityArray.append(newCeleberity)
+                        }
+                    }
+                }
+                
+                self.loadCelebrityAnnotation()
+                
+            }
+            
         }
 
     }
@@ -176,7 +199,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         let items = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
         let titleView = TitleView(navigationController: navigationController!, title: "All", items: items)
         titleView?.action = { [weak self] index in
-            
+            self?.MainMapView.removeAnnotations((self?.MainMapView.annotations)!)
+            self?.loadCelebrity(category: index)
             print("select \(index)")
         }
         
