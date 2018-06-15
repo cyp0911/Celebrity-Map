@@ -16,6 +16,7 @@ class Celebrity: NSObject {
     var hometownLatlng : CLLocation?
     var title : String = ""
     var hometown : String?
+    var address : String?
     
     override init(){}
     
@@ -33,6 +34,19 @@ class Celebrity: NSObject {
         self.title = title
         
         super.init()
+    }
+    
+    func toDictionary() -> [String : Any] {
+        return ["latitude" : self.hometownLatlng?.coordinate.latitude as Any, "longtidue" : self.hometownLatlng?.coordinate.longitude as Any]
+    }
+    
+    func parseJSON(json : JSON) {
+        
+        let parsedLatlon : CLLocation = CLLocation(latitude: json["results"][0]["geometry"]["location"]["lat"].doubleValue, longitude: json["results"][0]["geometry"]["location"]["lng"].doubleValue)
+        let parseAddress : String = json["results"][0]["formatted_address"].stringValue
+        self.hometownLatlng = parsedLatlon
+        self.address = parseAddress
+        
     }
     
     

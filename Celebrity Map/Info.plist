@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Let&apos;s see the celebrities who born near your location!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Let&apos;s see the celebrities who born near your location!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Let&apos;s see the celebrities who born near your location!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

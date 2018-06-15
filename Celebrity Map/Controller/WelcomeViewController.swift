@@ -11,6 +11,9 @@ import MapKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import FirebaseDatabase
+import Dropdowns
+
 
 // MARK - Class to hold the info of annotation
 final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
@@ -39,9 +42,13 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var userLocation : CLLocation? = nil
     var pin : CelebrityAnnotaion!
+    var onlyOnceRemove : Int = 0
     
     var celebrityArray = [Celebrity]()
     
+
+    //Mark - Firebase Initialization
+    private var roofRef: DatabaseReference!
 
     
     //MARK - IBoutlet Intialization
@@ -66,8 +73,15 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //Mapview Delegate
         MainMapView.delegate = self as? MKMapViewDelegate
         
+        //connect to Firebase
+        self.roofRef = Database.database().reference()
+        
         //Load celebrity
         loadCelebrity()
+
+        //Set navigationbar
+        setNavgationBar()
+        
     }
     
     //
@@ -93,75 +107,47 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK - Load Celebrity data
     func loadCelebrity() {
-//        let testHometown : CLLocation = CLLocation(latitude: 44.6617829,longitude: -63.5275867)
 
-        geocodingHometown(celebrity: Celebrity(name: "Sidney Crosby",hometown: "Cole-Habour,NS", title: "NHL Player"))
-        geocodingHometown(celebrity: Celebrity(name: "Justin Trudeau", hometown: "Ottawa", title: "Canada Premier"))
-        geocodingHometown(celebrity: Celebrity(name: "Chenyinpeng", hometown: "huanggang", title: "APP Coder"))
-        geocodingHometown(celebrity: Celebrity(name: "Lebron James", hometown: "Akron,OH", title: "NBA Star"))
-        geocodingHometown(celebrity: Celebrity(name: "Donald Trump", hometown: "New-York-City", title: "US president"))
-        geocodingHometown(celebrity: Celebrity(name: "Russell Westbrook", hometown: "Long Beach, California", title: "NBA Star"))
-        geocodingHometown(celebrity: Celebrity(name: "Jackie Chan", hometown: "Victoria Peak, British Hong Kong", title: "Actor"))
-        geocodingHometown(celebrity: Celebrity(name: "Isaac Newton", hometown: "Woolsthorpe, Lincolnshire, England", title: "Scientist"))
 
+        let celebrityRef = roofRef.child("celebrity")
+        celebrityRef.observe(.value) { snapshot in
+            self.celebrityArray.removeAll()
+            let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
+            for(key, _) in celebrityDictionaries{
+                if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
+                    
+                    if let newname = celebrityDictionary["title"]{
+                        let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String)
+                        self.celebrityArray.append(newCeleberity)
+                    }
+                }
+            }
+            
+            self.loadCelebrityAnnotation()
+
+        }
 
     }
     
     
     //MARK - Set annotation from all data in array
     func loadCelebrityAnnotation() -> Void {
-        print("Array\(celebrityArray.count)")
-        
         for celebrityItem in celebrityArray {
             pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title)
+            if onlyOnceRemove > 0 {
+                MainMapView.removeAnnotations(MainMapView.annotations)
+            }
             MainMapView.addAnnotation(pin)
         }
     }
     
-    //MARK - geoCoding the given hometown name
-    func geocodingHometown(celebrity: Celebrity) {
-        // A object used to append an entry to Array
-        let celebrityDataModel = Celebrity()
-        
-        let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(celebrity.hometown?.replacingOccurrences(of: " ", with: "-") ?? "beijing")&key=AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
-        
-        celebrityDataModel.name = celebrity.name
-        celebrityDataModel.title = celebrity.title
-        celebrityDataModel.hometown = celebrity.hometown
-        
-        Alamofire.request(url).responseJSON { response in
-//            print(response.request)  // original URL request
-//            print(response.response) // HTTP URL response
-//            print(response.data)     // server data
-//            print(response.result)   // result of response serialization
-            
-            let returnJson : JSON = JSON(response.result.value!)
-            celebrityDataModel.hometownLatlng = self.parseJSON(json: returnJson)
-            
-            if !self.celebrityArray.contains(celebrityDataModel) {
-                self.celebrityArray.append(celebrityDataModel)
-            }
-            print("countcele:\(self.celebrityArray.count)")
-            self.loadCelebrityAnnotation()
-        }
-
-    }
-    
-    //MARK - Parse Json to CLLocation object
-    func parseJSON(json : JSON) -> CLLocation {
-        
-        let parsedLatlon : CLLocation = CLLocation(latitude: json["results"][0]["geometry"]["location"]["lat"].doubleValue, longitude: json["results"][0]["geometry"]["location"]["lng"].doubleValue)
-        
-        
-        return parsedLatlon
-    }
 
     //MARK - Back to user location
     func userLocation(location : CLLocation){
         if location.horizontalAccuracy > 0 {
             self.locationManager.stopUpdatingLocation()
             
-            let span:MKCoordinateSpan = MKCoordinateSpanMake(5, 5)
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(10, 10)
             let userLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
             let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation, span)
             MainMapView.setRegion(region, animated: true)
@@ -169,11 +155,37 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func locatedMeButtonClicked(_ sender: UIButton) {
-        print("button clicked")
         if let userlocations = userLocation{
             userLocation(location: userlocations)
             sender.pulsate()
+            self.view.endEditing(true)
         }
+    }
+    
+    // MARK - Navigationbar
+    func setNavgationBar(){
+        //Navigationbar color
+        navigationController?.navigationBar.barTintColor = UIColor.red
+        tabBarController?.tabBar.barTintColor = UIColor.white
+        tabBarController?.tabBar.tintColor = UIColor.red
+        
+        //Config the navigation bar button color
+        Config.topLineColor = UIColor.white
+        Config.ArrowButton.Text.color = UIColor.white
+
+        let items = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
+        let titleView = TitleView(navigationController: navigationController!, title: "All", items: items)
+        titleView?.action = { [weak self] index in
+            
+            print("select \(index)")
+        }
+        
+        //Config the dropdownmenu color
+        Config.List.DefaultCell.Text.color = UIColor.white
+        Config.List.DefaultCell.separatorColor = UIColor.white
+        
+        navigationItem.titleView?.tintColor = UIColor.white
+        navigationItem.titleView = titleView
     }
     
 
