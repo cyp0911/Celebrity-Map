@@ -13,14 +13,12 @@ import SwiftyJSON
 import CoreLocation
 
 class SubmitViewController: UIViewController, UIPickerViewDelegate,
-UIPickerViewDataSource {
+UIPickerViewDataSource, UITextFieldDelegate {
     // Variable Initialization
-    var selectedPickerViewItem : String = ""
+    var selectedPickerViewItem : String = "Sport"
     var celebrityArray = [Celebrity]()
 
-    // Firebase
-    private var roofRef: DatabaseReference!
-
+  
     
     // Outlet Initialization
     @IBOutlet weak var nameTextField: UITextField!
@@ -36,10 +34,10 @@ UIPickerViewDataSource {
         //Delegate of Pickerview
         self.categoryPickerViewOutlet.delegate = self
         self.categoryPickerViewOutlet.dataSource = self
-        self.selectedPickerViewItem = "Sport"
         
-        //connect to Firebase
-        self.roofRef = Database.database().reference()
+        //Delegate of Textfield
+        self.hometownTextField.delegate = self
+        
         
         // Do any additional setup after loading the view.
     }
@@ -61,8 +59,8 @@ UIPickerViewDataSource {
     */
 
     @IBAction func submitButtonClicked(_ sender: UIButton) {
-        let elementAdded = Celebrity(name: nameTextField.text!, hometown: hometownTextField.text!, title: titles.text!)
-        geocodingHometown(celebrity: elementAdded)
+        let elementAdded = Celebrity(name: nameTextField.text!, hometown: hometownTextField.text!, title: titles.text!, category: selectedPickerViewItem)
+        insertCelebrityData(celebrity: elementAdded)
     }
 
     //MARK - Pickview Delegate
@@ -83,7 +81,7 @@ UIPickerViewDataSource {
     }
     
     //MARK - Connect to google firebase and geocoding API
-    func geocodingHometown(celebrity: Celebrity) {
+    func insertCelebrityData(celebrity: Celebrity) {
         // A object used to append an entry to Array
         let celebrityDataModel = Celebrity()
 
@@ -92,6 +90,7 @@ UIPickerViewDataSource {
         celebrityDataModel.name = celebrity.name
         celebrityDataModel.title = celebrity.title
         celebrityDataModel.hometown = celebrity.hometown
+        celebrityDataModel.category = celebrity.category
         
         Alamofire.request(url).responseJSON { response in
             //            print(response.request)  // original URL request
@@ -101,62 +100,29 @@ UIPickerViewDataSource {
             
             if let returnJson : JSON = JSON(response.result.value!){
             celebrityDataModel.parseJSON(json: returnJson)
-            self.insertDataToFirebase(celebrityDataModel: celebrityDataModel)
+            celebrityDataModel.saveToFirebase()
+                
+            let alert = UIAlertController(title: "Alert", message: "Entry succeed", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Good")
+                self.nameTextField.text = ""
+                self.hometownTextField.text = ""
+                self.titles.text = ""
+                self.view.endEditing(true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+                
             }else{
                 let alert = UIAlertController(title: "Alert", message: "Entry failed", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Failed")}))
                 self.present(alert, animated: true, completion: nil)
             }
-            
-            
-
         }
-        
     }
     
-    func parseJSON(json : JSON) -> CLLocation {
-        
-        let parsedLatlon : CLLocation = CLLocation(latitude: json["results"][0]["geometry"]["location"]["lat"].doubleValue, longitude: json["results"][0]["geometry"]["location"]["lng"].doubleValue)
-        
-        
-        return parsedLatlon
-    }
-    
-    //MARK - Get current time
-    func getCurrentDateTime() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let currentTime = formatter.string(from: Date())
-        return currentTime
-    }
-    
-    //Mark - Insert data to firebase
-    func insertDataToFirebase(celebrityDataModel : Celebrity) {
-        
-        let celebrityRef = self.roofRef.child("celebrity")
-        let idRef = celebrityRef.childByAutoId()
-        
-        idRef.child("name").setValue(celebrityDataModel.name)
-        
-        idRef.child("lat").setValue(celebrityDataModel.hometownLatlng?.coordinate.latitude)
-        idRef.child("lng").setValue(celebrityDataModel.hometownLatlng?.coordinate.longitude)
-        
-        idRef.child("hometown").setValue(celebrityDataModel.hometown)
-        idRef.child("title").setValue(celebrityDataModel.title)
-
-        idRef.child("address").setValue(celebrityDataModel.address)
-        idRef.child("category").setValue("\(self.selectedPickerViewItem)")
-        idRef.child("createTime").setValue(self.getCurrentDateTime())
-        
-        
-        let alert = UIAlertController(title: "Alert", message: "New entry added", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in
-            print("finish")
-            self.nameTextField.text = ""
-            self.hometownTextField.text = ""
-            self.titles.text = ""
-        }))
-        self.present(alert, animated: true, completion: nil)
+    //MARK - Return keyborad for textfield
+    func textFieldShouldReturn(_ scoreText: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
 }

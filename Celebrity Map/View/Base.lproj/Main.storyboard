@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="50" id="3fj-Ou-i1Y"/>
                                     <constraint firstAttribute="width" constant="50" id="gvj-4Q-OE6"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="LocateMe" backgroundImage="LocateMe"/>
+                                <state key="normal" title="Button" image="concentric-circles"/>
                                 <connections>
                                     <action selector="locatedMeButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p4r-vX-2gB"/>
                                 </connections>
@@ -209,7 +209,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LocateMe" width="192" height="192"/>
+        <image name="concentric-circles" width="512" height="512"/>
         <image name="worldwide" width="25" height="25"/>
     </resources>
 </document>

@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import FirebaseDatabase
 
 class Celebrity: NSObject {
     var name : String = ""
@@ -17,22 +18,27 @@ class Celebrity: NSObject {
     var title : String = ""
     var hometown : String?
     var address : String?
+    var category : String?
+    
+    // Firebase
+    private var roofRef: DatabaseReference!
     
     override init(){}
     
-    init(name: String, hometown: String, title: String) {
+    init(name: String, hometown: String, title: String, category: String) {
         self.name = name
         self.hometown = hometown
         self.title = title
+        self.category = category
         
         super.init()
     }
     
-    init(name: String, hometownLatlng: CLLocation, title: String) {
+    init(name: String, hometownLatlng: CLLocation, title: String, category: String) {
         self.name = name
         self.hometownLatlng = hometownLatlng
         self.title = title
-        
+        self.category = category
         super.init()
     }
     
@@ -46,9 +52,25 @@ class Celebrity: NSObject {
         let parseAddress : String = json["results"][0]["formatted_address"].stringValue
         self.hometownLatlng = parsedLatlon
         self.address = parseAddress
+    }
+    
+    func saveToFirebase() {
+        roofRef = Database.database().reference()
+        let celebrityRef = self.roofRef.child("celebrity")
+        let idRef = celebrityRef.childByAutoId()
+        
+        let dict : [String : Any] = ["name": self.name as! String, "lat": self.hometownLatlng?.coordinate.latitude as! Double, "lng": self.hometownLatlng?.coordinate.longitude as! Double, "hometown": self.hometown as! String, "title": self.title, "category": self.category as! String, "createTime": self.getCurrentDateTime() , "address": self.address as! String]
+        
+        idRef.setValue(dict)
+        
         
     }
     
-    
+    func getCurrentDateTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let currentTime = formatter.string(from: Date())
+        return currentTime
+    }
     
 }

@@ -13,6 +13,7 @@ import Alamofire
 import SwiftyJSON
 import FirebaseDatabase
 import Dropdowns
+import SVProgressHUD
 
 
 // MARK - Class to hold the info of annotation
@@ -45,7 +46,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     var onlyOnceRemove : Int = 0
     
     var celebrityArray = [Celebrity]()
-    
+    var defaults = UserDefaults.standard
+    let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
+    var fullCelebrityArray = [Celebrity]()
+
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -76,12 +80,19 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //connect to Firebase
         self.roofRef = Database.database().reference()
         
-        //Load celebrity
+        //SVProgress
+        SVProgressHUD.show()
+        
+        //Load data from database
         loadCelebrity()
-
+        
+        //Save current category index
+        defaults.set(0, forKey: "selectedCategory")
+        
         //Set navigationbar
         setNavgationBar()
         
+        SVProgressHUD.dismiss()
     }
     
     //
@@ -106,61 +117,53 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     //MARK - Load Celebrity data
-    func loadCelebrity(category: Int = 0) {
-
-        let items = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
+    func loadCelebrity() {
 
         let celebrityRef = roofRef.child("celebrity")
         
-        if category == 0 {
-        
-        celebrityRef.observe(.value) { snapshot in
-            self.celebrityArray.removeAll()
-            let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
-            for(key, _) in celebrityDictionaries{
-                if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
-                    
-                    if let newname = celebrityDictionary["title"]{
-                        let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String)
-                        self.celebrityArray.append(newCeleberity)
-                    }
-                }
-            }
-            
-            self.loadCelebrityAnnotation()
-
-        }
-        }else{
-            celebrityRef.queryOrdered(byChild: "category").queryEqual(toValue: items[category]).observe(.value) { snapshot in
+            celebrityRef.queryOrdered(byChild: "createTime").observe(.value) { snapshot in
+                // Loading progress show
+                SVProgressHUD.show()
                 self.celebrityArray.removeAll()
                 let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
                 for(key, _) in celebrityDictionaries{
                     if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
-                        
+                        print(key)
+                        print(celebrityDictionary["title"] as! String)
                         if let newname = celebrityDictionary["title"]{
-                            let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String)
+                            let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String, category: celebrityDictionary["category"] as! String)
                             self.celebrityArray.append(newCeleberity)
                         }
                     }
                 }
-                
-                self.loadCelebrityAnnotation()
-                
-            }
-            
-        }
+                    self.loadCelebrityAnnotation()
+                    // Loading progress show
+                    SVProgressHUD.dismiss()
+                }
 
     }
     
     
     //MARK - Set annotation from all data in array
     func loadCelebrityAnnotation() -> Void {
+        let selectedIndex = defaults.integer(forKey: "selectedCategory")
+        let selectedCategory = cetegoryArray[selectedIndex]
+        
+        if selectedIndex == 0 && onlyOnceRemove == 0{
+            fullCelebrityArray = celebrityArray
+        }else{
+            celebrityArray = self.celebrityArray.filter { $0.category == selectedCategory}
+        }
+        
         for celebrityItem in celebrityArray {
             pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title)
             if onlyOnceRemove > 0 {
                 MainMapView.removeAnnotations(MainMapView.annotations)
+                onlyOnceRemove += 1
             }
             MainMapView.addAnnotation(pin)
+            celebrityArray = fullCelebrityArray
+
         }
     }
     
@@ -200,8 +203,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         let titleView = TitleView(navigationController: navigationController!, title: "All", items: items)
         titleView?.action = { [weak self] index in
             self?.MainMapView.removeAnnotations((self?.MainMapView.annotations)!)
-            self?.loadCelebrity(category: index)
-            print("select \(index)")
+            self?.defaults.set(index, forKey: "selectedCategory")
+            self?.loadCelebrityAnnotation()
         }
         
         //Config the dropdownmenu color
