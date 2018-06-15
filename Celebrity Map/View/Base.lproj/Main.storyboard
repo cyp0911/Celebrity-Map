@@ -73,11 +73,11 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Home-->
         <scene sceneID="ooh-qb-t38">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jxI-e6-mJ0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" badgeValue="5" systemItem="featured" id="GCF-WY-WHb"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="worldwide" landscapeImage="worldwide" largeContentSizeImage="worldwide" badgeValue="5" selectedImage="worldwide" id="GCF-WY-WHb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EAU-RN-ZrM">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -210,5 +210,6 @@
     </scenes>
     <resources>
         <image name="LocateMe" width="192" height="192"/>
+        <image name="worldwide" width="25" height="25"/>
     </resources>
 </document>
