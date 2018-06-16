@@ -12,6 +12,7 @@
 		3D579B9520D2F908009B970C /* DatabaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D579B9420D2F908009B970C /* DatabaseOperation.swift */; };
 		3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FB20D097D100E9B886 /* ButtonClicked.swift */; };
 		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
+		3D70D2A820D589C400229C1E /* MenuBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70D2A720D589C300229C1E /* MenuBtnView.swift */; };
 		3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F420D07418008DD653 /* AppDelegate.swift */; };
 		3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F620D07418008DD653 /* WelcomeViewController.swift */; };
 		3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3FB20D07418008DD653 /* Celebrity_Map.xcdatamodeld */; };
@@ -29,6 +30,7 @@
 		3D579B9420D2F908009B970C /* DatabaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseOperation.swift; sourceTree = "<group>"; };
 		3D6488FB20D097D100E9B886 /* ButtonClicked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonClicked.swift; sourceTree = "<group>"; };
 		3D6488FD20D09E9F00E9B886 /* Celebrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebrity.swift; sourceTree = "<group>"; };
+		3D70D2A720D589C300229C1E /* MenuBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBtnView.swift; sourceTree = "<group>"; };
 		3D7C3EA520D364B200C667CA /* Celebrity Map-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Celebrity Map-Bridging-Header.h"; sourceTree = "<group>"; };
 		3D82E3F120D07418008DD653 /* Celebrity Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Celebrity Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D82E3F420D07418008DD653 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		3D7C3E9E20D3617600C667CA /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D70D2A720D589C300229C1E /* MenuBtnView.swift */,
 				3D7C3EA520D364B200C667CA /* Celebrity Map-Bridging-Header.h */,
 			);
 			path = "Support Files";
@@ -260,6 +263,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Dropdowns/Dropdowns.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupKit/PopupKit.framework",
 				"${BUILT_PRODUCTS_DIR}/RKDropdownAlert/RKDropdownAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -271,6 +275,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dropdowns.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RKDropdownAlert.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -289,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D70D2A820D589C400229C1E /* MenuBtnView.swift in Sources */,
 				3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */,
 				3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */,
 				3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */,

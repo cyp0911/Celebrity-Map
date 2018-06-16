@@ -15,7 +15,7 @@ import FirebaseDatabase
 import Dropdowns
 import SVProgressHUD
 import RKDropdownAlert
-
+import PopupKit
 
 // MARK - Class to hold the info of annotation
 final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
@@ -35,6 +35,9 @@ final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
 }
 
 class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var menuView: MenuBtnView?
+
     
     //Constants
     let APP_ID = "AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
@@ -61,7 +64,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var locateMeOutlet: UIButton!
     
-
+    @IBOutlet weak var shareButtonOutlet: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +99,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //Set navigationbar
         setNavgationBar()
         
-        //Set bannerview not visable
+
         
         SVProgressHUD.dismiss()
         
@@ -231,8 +235,63 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     func dropDownAlert(title: String) {
         
         RKDropdownAlert.title(title, backgroundColor: UIColor.orange, textColor: UIColor.white, time: 2)
+    }
+    
+    @IBAction func shareButtonClicked(_ sender: Any) {
+        //Set popUp social sharing menu
+        showMenu()
 
+    }
+    
+
+//    func setPopupShareMenu(){
+//
+//        actionBtn.frame = CGRect(x: 100, y: 100, width: 69, height: 69)
+//        actionBtn.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
+//        actionBtn.setImage(#imageLiteral(resourceName: "addItemStart"), for: UIControlState())
+//        actionBtn.backgroundColor = UIColor.clear
+//        actionBtn.layer.cornerRadius = actionBtn.frame.size.width / 2
+//        actionBtn.addTarget(self, action:#selector(showMenu), for: .touchUpInside)
+//        actionBtn.center = CGPoint(x: view.frame.size.width - 42, y: 150)
+//        self.view.addSubview(actionBtn)
+//
+//
+//////        menuView?.dismissBlock = { [weak self] in
+////            self?.menuView = nil
+////        }
+//    }
+    
+    @objc func showMenu() {
+        shareButtonOutlet.isEnabled = false
+        let imageNames = ["lefttime_schedule", "lefttime_memo", "lefttime_riji"]
+        let titleNames = [NSLocalizedString("Facebook", comment: ""), NSLocalizedString("备忘", comment: ""), NSLocalizedString("日记", comment: "")]
+        menuView = MenuBtnView(frame: view.frame, imageNames: imageNames, titleNames: titleNames, isFromTabBar: false, distance: 8, selectAction: { (index) in
+            
+            switch index {
+            case 0:
+                print("0000")
+            default:
+                print("1111")
+            }
+            
+            
+            print(titleNames[index])
+        })
+        
+        menuView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        menuView?.showInView(superView: view)
+        menuView?.dismissBlock = { [weak self] in
+            self?.menuView = nil
+            self?.shareButtonOutlet.isEnabled = true
+        }
     }
 
 }
+
+
+//MARK - PopupKit, share on socail
+extension WelcomeViewController{
+    
+}
+    
 

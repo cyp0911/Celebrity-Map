@@ -45,10 +45,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Celebrity Map" id="DLk-Qt-Ok5"/>
+                    <navigationItem key="navigationItem" title="Celebrity Map" id="DLk-Qt-Ok5">
+                        <barButtonItem key="rightBarButtonItem" image="share" id="9ih-Y3-RCm">
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="shareButtonClicked:" destination="BYZ-38-t0r" id="SBu-Zh-vJz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="MainMapView" destination="GAy-Ao-osI" id="ov2-PY-2po"/>
                         <outlet property="locateMeOutlet" destination="Szv-n7-OOm" id="Wrw-eq-ZZN"/>
+                        <outlet property="shareButtonOutlet" destination="9ih-Y3-RCm" id="NZq-HB-u9y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -225,6 +233,7 @@
     </scenes>
     <resources>
         <image name="concentric-circles" width="512" height="512"/>
+        <image name="share" width="24" height="24"/>
         <image name="worldwide" width="25" height="25"/>
     </resources>
 </document>
