@@ -11,6 +11,7 @@ import FirebaseDatabase
 import Alamofire
 import SwiftyJSON
 import CoreLocation
+import WebKit
 
 class SubmitViewController: UIViewController, UIPickerViewDelegate,
 UIPickerViewDataSource, UITextFieldDelegate {
@@ -26,6 +27,10 @@ UIPickerViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var hometownTextField: UITextField!
     @IBOutlet weak var categoryPickerViewOutlet: UIPickerView!
     
+    @IBOutlet weak var webDataView: WKWebView!
+    
+    
+    
     var pickerViewArray = ["Sport", "Political", "Art", "Science", "Technology", "Business"]
     
     override func viewDidLoad() {
@@ -38,8 +43,12 @@ UIPickerViewDataSource, UITextFieldDelegate {
         //Delegate of Textfield
         self.hometownTextField.delegate = self
         
+        //Webview setting
+        setWebView()
         
-        // Do any additional setup after loading the view.
+        //Set Gesture
+        setGesture()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +70,7 @@ UIPickerViewDataSource, UITextFieldDelegate {
     @IBAction func submitButtonClicked(_ sender: UIButton) {
         let elementAdded = Celebrity(name: nameTextField.text!, hometown: hometownTextField.text!, title: titles.text!, category: selectedPickerViewItem)
         insertCelebrityData(celebrity: elementAdded)
+        sender.shake()
     }
 
     //MARK - Pickview Delegate
@@ -104,9 +114,9 @@ UIPickerViewDataSource, UITextFieldDelegate {
                 
             let alert = UIAlertController(title: "Alert", message: "Entry succeed", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Good")
+                self.titles.text = ""
                 self.nameTextField.text = ""
                 self.hometownTextField.text = ""
-                self.titles.text = ""
                 self.view.endEditing(true)
             }))
             self.present(alert, animated: true, completion: nil)
@@ -123,6 +133,58 @@ UIPickerViewDataSource, UITextFieldDelegate {
     func textFieldShouldReturn(_ scoreText: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
+    }
+    
+    //MARK - Set webview
+    func setWebView(){
+        let url = URL(string: "https://www.google.ca/")
+        let request = URLRequest(url: url!)
+        webDataView.load(request)
+        
+        webDataView.layer.borderWidth = 1
+        webDataView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+        webDataView.allowsBackForwardNavigationGestures = true
+    }
+    
+    //MARK - Set auto paste functions
+    @objc func pasteToName() {
+        let pb: UIPasteboard = UIPasteboard.general;
+        nameTextField.text  = pb.string
+    }
+    
+    @objc func pasteToHome() {
+        let pb: UIPasteboard = UIPasteboard.general;
+        hometownTextField.text  = pb.string
+    }
+    
+    @objc func pasteToTitle() {
+        let pb: UIPasteboard = UIPasteboard.general;
+        titles.text  = pb.string
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(false)
+    }
+    
+    func setGesture(){
+        //Auto paste Right -> Name
+        var swipeRight = UISwipeGestureRecognizer()
+        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(pasteToName as () -> Void))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        //Auto paste Left -> Home
+        var swipeLeft = UISwipeGestureRecognizer()
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(pasteToHome as () -> Void))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        //Auto paste Longpress -> Title
+        var longPress = UILongPressGestureRecognizer()
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(pasteToTitle as () -> Void))
+        longPress.minimumPressDuration = 1.25
+        self.view.addGestureRecognizer(longPress)
+
     }
     
 }

@@ -14,12 +14,12 @@
 		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
 		3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F420D07418008DD653 /* AppDelegate.swift */; };
 		3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3F620D07418008DD653 /* WelcomeViewController.swift */; };
-		3D82E3FA20D07418008DD653 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E3F820D07418008DD653 /* Main.storyboard */; };
 		3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D82E3FB20D07418008DD653 /* Celebrity_Map.xcdatamodeld */; };
 		3D82E3FF20D0741A008DD653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E3FE20D0741A008DD653 /* Assets.xcassets */; };
 		3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */; };
 		3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40D20D07A1C008DD653 /* MapKit.framework */; };
 		3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40F20D07B3C008DD653 /* CoreLocation.framework */; };
+		3DCA743D20D4B728008BF03D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DCA743C20D4B728008BF03D /* Main.storyboard */; };
 		F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,13 +33,13 @@
 		3D82E3F120D07418008DD653 /* Celebrity Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Celebrity Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D82E3F420D07418008DD653 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D82E3F620D07418008DD653 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		3D82E3F920D07418008DD653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D82E3FC20D07418008DD653 /* Celebrity_Map.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Celebrity_Map.xcdatamodel; sourceTree = "<group>"; };
 		3D82E3FE20D0741A008DD653 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D82E40120D0741A008DD653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D82E40320D0741A008DD653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D82E40D20D07A1C008DD653 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3D82E40F20D07B3C008DD653 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3DCA743C20D4B728008BF03D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.release.xcconfig"; sourceTree = "<group>"; };
 		A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celebrity_Map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		3D82E40A20D07453008DD653 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3D82E3F820D07418008DD653 /* Main.storyboard */,
+				3DCA743C20D4B728008BF03D /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 				3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */,
 				3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */,
 				3D82E3FF20D0741A008DD653 /* Assets.xcassets in Resources */,
-				3D82E3FA20D07418008DD653 /* Main.storyboard in Resources */,
+				3DCA743D20D4B728008BF03D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +260,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Dropdowns/Dropdowns.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/RKDropdownAlert/RKDropdownAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -270,6 +271,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dropdowns.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RKDropdownAlert.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -300,14 +302,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3D82E3F820D07418008DD653 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D82E3F920D07418008DD653 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

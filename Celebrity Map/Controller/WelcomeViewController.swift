@@ -14,6 +14,7 @@ import SwiftyJSON
 import FirebaseDatabase
 import Dropdowns
 import SVProgressHUD
+import RKDropdownAlert
 
 
 // MARK - Class to hold the info of annotation
@@ -60,6 +61,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var locateMeOutlet: UIButton!
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -92,7 +95,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //Set navigationbar
         setNavgationBar()
         
+        //Set bannerview not visable
+        
         SVProgressHUD.dismiss()
+        
+
     }
     
     //
@@ -128,14 +135,14 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
                 let celebrityDictionaries = snapshot.value as? [String : Any] ?? [:]
                 for(key, _) in celebrityDictionaries{
                     if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
-                        print(key)
-                        print(celebrityDictionary["title"] as! String)
                         if let newname = celebrityDictionary["title"]{
                             let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String, category: celebrityDictionary["category"] as! String)
                             self.celebrityArray.append(newCeleberity)
                         }
                     }
                 }
+
+                    self.dropDownAlert(title: "\(self.celebrityArray.count) Celebrities loded!")
                     self.loadCelebrityAnnotation()
                     // Loading progress show
                     SVProgressHUD.dismiss()
@@ -162,9 +169,9 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
                 onlyOnceRemove += 1
             }
             MainMapView.addAnnotation(pin)
-            celebrityArray = fullCelebrityArray
-
         }
+        celebrityArray = fullCelebrityArray
+
     }
     
 
@@ -198,24 +205,34 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //Config the navigation bar button color
         Config.topLineColor = UIColor.white
         Config.ArrowButton.Text.color = UIColor.white
+        Config.List.backgroundColor = UIColor.white
+        //Config the dropdownmenu color
+        Config.List.DefaultCell.Text.color = UIColor.red
+        Config.List.DefaultCell.separatorColor = UIColor.red
 
-        let items = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
-        let titleView = TitleView(navigationController: navigationController!, title: "All", items: items)
+        // Take stored setting from user default
+        let selectedIndex = defaults.integer(forKey: "selectedCategory")
+        let selectedCategory = cetegoryArray[selectedIndex]
+
+        
+        let titleView = TitleView(navigationController: navigationController!, title: selectedCategory, items: self.cetegoryArray)
         titleView?.action = { [weak self] index in
             self?.MainMapView.removeAnnotations((self?.MainMapView.annotations)!)
             self?.defaults.set(index, forKey: "selectedCategory")
             self?.loadCelebrityAnnotation()
         }
         
-        //Config the dropdownmenu color
-        Config.List.DefaultCell.Text.color = UIColor.white
-        Config.List.DefaultCell.separatorColor = UIColor.white
         
         navigationItem.titleView?.tintColor = UIColor.white
         navigationItem.titleView = titleView
     }
     
 
+    func dropDownAlert(title: String) {
+        
+        RKDropdownAlert.title(title, backgroundColor: UIColor.orange, textColor: UIColor.white, time: 2)
+
+    }
 
 }
 
