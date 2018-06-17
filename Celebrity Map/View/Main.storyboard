@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,25 +21,17 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GAy-Ao-osI">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szv-n7-OOm">
-                                <rect key="frame" x="309" y="553" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Szv-n7-OOm" secondAttribute="height" multiplier="1:1" id="hV9-dB-YR4"/>
-                                    <constraint firstAttribute="height" constant="50" id="kZO-dc-d7l"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="concentric-circles"/>
-                                <connections>
-                                    <action selector="locatedMeButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p4r-vX-2gB"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RBs-aG-0jZ">
+                                <rect key="frame" x="0.0" y="468" width="375" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="GAy-Ao-osI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="E9E-6t-jGk"/>
                             <constraint firstItem="GAy-Ao-osI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JRH-tE-pZq"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Szv-n7-OOm" secondAttribute="bottom" constant="15" id="Npr-Mm-vwP"/>
                             <constraint firstItem="GAy-Ao-osI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dwx-ty-8z7"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Szv-n7-OOm" secondAttribute="trailing" constant="16" id="gy4-CL-0It"/>
                             <constraint firstItem="GAy-Ao-osI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="wAF-Gv-wXU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -55,7 +46,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="MainMapView" destination="GAy-Ao-osI" id="ov2-PY-2po"/>
-                        <outlet property="locateMeOutlet" destination="Szv-n7-OOm" id="Wrw-eq-ZZN"/>
+                        <outlet property="bounceDetailView" destination="RBs-aG-0jZ" id="U0K-lf-04m"/>
                         <outlet property="shareButtonOutlet" destination="9ih-Y3-RCm" id="NZq-HB-u9y"/>
                     </connections>
                 </viewController>
@@ -109,7 +100,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New data enter system" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81U-of-q5C">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New data enter system" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81U-of-q5C">
                                 <rect key="frame" x="32.5" y="20" width="309.5" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="0k7-0c-rfa"/>
@@ -232,7 +223,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="concentric-circles" width="512" height="512"/>
         <image name="share" width="24" height="24"/>
         <image name="worldwide" width="25" height="25"/>
     </resources>

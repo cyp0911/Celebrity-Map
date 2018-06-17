@@ -15,7 +15,7 @@ import FirebaseDatabase
 import Dropdowns
 import SVProgressHUD
 import RKDropdownAlert
-import PopupKit
+
 
 // MARK - Class to hold the info of annotation
 final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
@@ -34,8 +34,9 @@ final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
     
 }
 
-class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
+class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    //some view Init
     var menuView: MenuBtnView?
 
     
@@ -62,9 +63,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     //MARK - IBoutlet Intialization
     @IBOutlet weak var MainMapView: MKMapView!
     
-    @IBOutlet weak var locateMeOutlet: UIButton!
-    
     @IBOutlet weak var shareButtonOutlet: UIBarButtonItem!
+    
+    @IBOutlet weak var bounceDetailView: UIView!
+    
     
     
     override func viewDidLoad() {
@@ -99,9 +101,14 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
         //Set navigationbar
         setNavgationBar()
         
-
+        setBot()
         
         SVProgressHUD.dismiss()
+        
+        
+        
+    
+        
         
 
     }
@@ -153,6 +160,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
                 }
 
     }
+    
     
     
     //MARK - Set annotation from all data in array
@@ -239,37 +247,24 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func shareButtonClicked(_ sender: Any) {
         //Set popUp social sharing menu
-        showMenu()
+//        showMenu()
+        let active = UIActivityViewController(activityItems: ["www.google.ca"], applicationActivities: nil)
+        active.popoverPresentationController?.sourceView = self.view
+        self.present(active, animated: true, completion: nil)
 
     }
     
 
-//    func setPopupShareMenu(){
-//
-//        actionBtn.frame = CGRect(x: 100, y: 100, width: 69, height: 69)
-//        actionBtn.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
-//        actionBtn.setImage(#imageLiteral(resourceName: "addItemStart"), for: UIControlState())
-//        actionBtn.backgroundColor = UIColor.clear
-//        actionBtn.layer.cornerRadius = actionBtn.frame.size.width / 2
-//        actionBtn.addTarget(self, action:#selector(showMenu), for: .touchUpInside)
-//        actionBtn.center = CGPoint(x: view.frame.size.width - 42, y: 150)
-//        self.view.addSubview(actionBtn)
-//
-//
-//////        menuView?.dismissBlock = { [weak self] in
-////            self?.menuView = nil
-////        }
-//    }
     
     @objc func showMenu() {
         shareButtonOutlet.isEnabled = false
-        let imageNames = ["lefttime_schedule", "lefttime_memo", "lefttime_riji"]
+        let imageNames = ["FacebookIcon", "lefttime_memo", "lefttime_riji"]
         let titleNames = [NSLocalizedString("Facebook", comment: ""), NSLocalizedString("备忘", comment: ""), NSLocalizedString("日记", comment: "")]
         menuView = MenuBtnView(frame: view.frame, imageNames: imageNames, titleNames: titleNames, isFromTabBar: false, distance: 8, selectAction: { (index) in
             
             switch index {
             case 0:
-                print("0000")
+                print("Facebook")
             default:
                 print("1111")
             }
@@ -285,13 +280,158 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate {
             self?.shareButtonOutlet.isEnabled = true
         }
     }
+    
+    //Bottom animation here
+    
+    
+    //Mark - Button Init
+    var locatedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    var botNameLabel = UILabel(frame: CGRect(x: 20, y: 15, width: 0, height: 21))
+    var botTextView = UITextView()
 
-}
+
+    
+    func setBot(){
+        print("View height \(self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!), Tab height \(self.view.frame.height)")
+        
+        //UIVIEW Animation
+        
+        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+        
+        
+        self.bounceDetailView.clipsToBounds = true
+        self.bounceDetailView.layer.cornerRadius = 25
+        self.bounceDetailView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        self.bounceDetailView.backgroundColor = UIColor.white
+        self.bounceDetailView.alpha = 0
+        
+        //addcomponents to the botview
+        
+        //1. botNameLabel
+        botNameLabel = UILabel(frame: CGRect(x: 20, y: 15, width: self.view.frame.width / 2 - 30, height: 21))
+        botNameLabel.textAlignment = .left
+        botNameLabel.text = "Yinpeng Chen"
+        botNameLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        botNameLabel.textColor = UIColor.black
+        botNameLabel.adjustsFontSizeToFitWidth = true
+        self.bounceDetailView.addSubview(botNameLabel)
+        
+        botTextView = UITextView(frame: CGRect(x: 15, y: botNameLabel.frame.height + 20, width: botNameLabel.frame.width - 10, height: self.bounceDetailView.frame.height - botNameLabel.frame.height - 20))
+        botTextView.textColor = UIColor.gray
+        botTextView.font = UIFont.systemFont(ofSize: 15.0)
+        botTextView.textAlignment = .left
+        botTextView.backgroundColor = UIColor.clear
+        botTextView.isEditable = false
+        botTextView.layer.cornerRadius = 25
+        botTextView.text = "Ernesto Guevara (Spanish: [ˈtʃe ɣeˈβaɾa][4] June 14, 1928 – October 9, 1967)[1][5] was an Argentine Marxist revolutionary, physician, author, guerrilla leader, diplomat and military theorist. "
+        self.bounceDetailView.addSubview(botTextView)
+        
+        //share and more button and label
+        let botShareBtn = UIButton(frame: CGRect(x: botNameLabel.frame.width + 15, y: botNameLabel.frame.origin.y - 5, width: 50, height: 50))
+        botShareBtn.backgroundColor = UIColor.clear
+        botShareBtn.setImage(UIImage(named: "shareBtn"), for: .normal)
+        botShareBtn.center.x = self.view.frame.width / 2 + botShareBtn.frame.width / 2 + 5
+        botShareBtn.center.y = self.bounceDetailView.frame.height * 1 / 4
+        self.bounceDetailView.addSubview(botShareBtn)
+
+        let botMoreBtn = UIButton(frame: CGRect(x: botNameLabel.frame.width + 15, y: botNameLabel.frame.origin.y - 5, width: 50, height: 50))
+        botMoreBtn.backgroundColor = UIColor.clear
+        botMoreBtn.setImage(UIImage(named: "moreBtn"), for: .normal)
+        botMoreBtn.center.x = botShareBtn.center.x
+        botMoreBtn.center.y = self.bounceDetailView.frame.height * 3 / 4
+        self.bounceDetailView.addSubview(botMoreBtn)
+        
+        //Draw seperating line
+        let midLine = UIView(frame: CGRect(x: 20, y: 0, width: 1, height: self.bounceDetailView.frame.height - 60))
+        midLine.center.x = botShareBtn.frame.minX - 10
+        midLine.backgroundColor = UIColor.gray
+        midLine.center.y = self.bounceDetailView.frame.height / 2
+        self.bounceDetailView.addSubview(midLine)
+        
+        let RightLine = UIView(frame: CGRect(x: 20, y: 0, width: 1, height: midLine.frame.height))
+        RightLine.center.x = botShareBtn.frame.maxX + 10
+        RightLine.backgroundColor = UIColor.gray
+        RightLine.center.y = self.bounceDetailView.frame.height / 2
+        self.bounceDetailView.addSubview(RightLine)
 
 
-//MARK - PopupKit, share on socail
-extension WelcomeViewController{
+        
+        //bot Image
+        let botImageDetail = UIImage(named: "nhl")
+        let botImageView = UIImageView(image: botImageDetail)
+        botImageView.frame = CGRect(x: self.bounceDetailView.frame.width / 2 + botShareBtn.frame.width + 30, y: 100, width: self.bounceDetailView.frame.width / 2 - botShareBtn.frame.width - 50, height: self.bounceDetailView.frame.height - 20)
+        botImageView.center.y = self.bounceDetailView.frame.height / 2
+        botImageView.layer.cornerRadius = 10
+        botImageView.contentMode = .scaleAspectFill
+        botImageView.clipsToBounds = true
+        self.bounceDetailView.addSubview(botImageView)
+        
+        //Top indicator short line
+        let topLine = UIView(frame: CGRect(x: 20, y: 0, width: 20, height: 2))
+        topLine.center.x = self.bounceDetailView.frame.width / 2
+        topLine.backgroundColor = UIColor.gray
+        topLine.layer.cornerRadius = 25
+        topLine.center.y = 10
+        self.bounceDetailView.addSubview(topLine)
+
+        //located button
+        locatedButton.backgroundColor = UIColor.clear
+        locatedButton.setImage(UIImage(named: "LocateMe"), for: .normal)
+        locatedButton.center.x = self.view.frame.width - 65
+        locatedButton.center.y = self.bounceDetailView.frame.minY - 65
+        locatedButton.backgroundColor = UIColor.white
+        locatedButton.layer.cornerRadius = locatedButton.frame.size.width/2
+        locatedButton.clipsToBounds = true
+        locatedButton.layer.borderColor = UIColor.white.cgColor
+        locatedButton.layer.borderWidth = 5.0
+        locatedButton.addTarget(self, action: #selector(locatedMeButtonClicked), for: .touchUpInside)
+        self.view.addSubview(locatedButton)
+        }
+    
+    //MARK - Animation for bounceview
+    func botViewAnimation(){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn], animations: {
+            self.bounceDetailView.frame.origin.y -= self.bounceDetailView.frame.height
+            self.bounceDetailView.alpha = 1
+            
+            self.locatedButton.frame.origin.y -= self.bounceDetailView.frame.height
+        }, completion: nil)
+    }
+    
+    func botViewAnimationReverse(){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut], animations: {
+            self.bounceDetailView.frame.origin.y += self.bounceDetailView.frame.height
+            self.bounceDetailView.alpha = 0
+            
+            self.locatedButton.frame.origin.y += self.bounceDetailView.frame.height
+        }, completion: nil)
+    }
+    
+    //MARK - Tap annotation and responder
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // first ensure that it really is an EventAnnotation:
+        if let eventAnnotation = view.annotation as? CelebrityAnnotaion {
+            let theEvent = eventAnnotation.title
+            // now do somthing with your event
+            botNameLabel.text = "\(theEvent!)"
+            botViewAnimation()
+            
+            
+            
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView,
+                 didDeselect view: MKAnnotationView){
+        botViewAnimationReverse()
+    }
+    
+    
     
 }
+
+
+
     
 
