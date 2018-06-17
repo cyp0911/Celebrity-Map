@@ -22,11 +22,13 @@ final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
+    var celebrity: Celebrity
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, celebrity: Celebrity?) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
+        self.celebrity = celebrity!
         
         super.init()
     }
@@ -175,7 +177,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
         
         for celebrityItem in celebrityArray {
-            pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title)
+            pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title, celebrity: celebrityItem)
             if onlyOnceRemove > 0 {
                 MainMapView.removeAnnotations(MainMapView.annotations)
                 onlyOnceRemove += 1
@@ -415,6 +417,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             let theEvent = eventAnnotation.title
             // now do somthing with your event
             botNameLabel.text = "\(theEvent!)"
+            botTextView.text = "\(eventAnnotation.celebrity.title)"
             botViewAnimation()
             
             
