@@ -11,9 +11,17 @@ import UIKit
 
 
 
-class botFrame: UIViewController {
+class BotFrame: UIViewController {
 
-
+    func setImageByUrl(imageview: UIImageView, url: String) -> UIImageView {
+        if let urlLink = NSURL(string: "\(url)") {
+            if let data = NSData(contentsOf: urlLink as URL) {
+                imageview.image = UIImage(data: data as Data)
+            }
+        }
+        
+        return imageview
+    }
     
     
 }

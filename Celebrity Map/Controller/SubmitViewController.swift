@@ -29,9 +29,11 @@ UIPickerViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var webDataView: WKWebView!
     
+    @IBOutlet weak var ImageIndicator: UILabel!
     
+    @IBOutlet weak var IntroIndicator: UILabel!
     
-    var pickerViewArray = ["Sport", "Political", "Art", "Science", "Technology", "Business"]
+    var pickerViewArray = ["Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +71,8 @@ UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBAction func submitButtonClicked(_ sender: UIButton) {
         let elementAdded = Celebrity(name: nameTextField.text!, hometown: hometownTextField.text!, title: titles.text!, category: selectedPickerViewItem)
+        elementAdded.imageUrl = ImageIndicator.text
+        elementAdded.intro = IntroIndicator.text
         insertCelebrityData(celebrity: elementAdded)
         sender.shake()
     }
@@ -95,12 +99,14 @@ UIPickerViewDataSource, UITextFieldDelegate {
         // A object used to append an entry to Array
         let celebrityDataModel = Celebrity()
 
-        let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(celebrity.hometown?.replacingOccurrences(of: " ", with: "-") ?? "beijing")&key=AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
+        let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(celebrity.hometown?.replacingOccurrences(of: " ", with: "+") ?? "beijing")&key=AIzaSyALFOLxjKHnfW4SBOw20t6hVXiUfQ4RY3E"
         
         celebrityDataModel.name = celebrity.name
         celebrityDataModel.title = celebrity.title
         celebrityDataModel.hometown = celebrity.hometown
         celebrityDataModel.category = celebrity.category
+        celebrityDataModel.intro = celebrity.intro
+        celebrityDataModel.imageUrl = celebrity.imageUrl
         
         Alamofire.request(url).responseJSON { response in
             //            print(response.request)  // original URL request
@@ -114,9 +120,22 @@ UIPickerViewDataSource, UITextFieldDelegate {
                 
             let alert = UIAlertController(title: "Alert", message: "Entry succeed", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Good")
+                
+                self.titles.isEnabled = false
+                self.nameTextField.isEnabled = false
+                self.hometownTextField.isEnabled = false
+                
                 self.titles.text = ""
                 self.nameTextField.text = ""
                 self.hometownTextField.text = ""
+                
+                self.titles.isEnabled = true
+                self.nameTextField.isEnabled = true
+                self.hometownTextField.isEnabled = true
+                self.ImageIndicator.text="Image ->"
+                self.IntroIndicator.text="Intro -up"
+
+                
                 self.view.endEditing(true)
             }))
             self.present(alert, animated: true, completion: nil)
@@ -162,28 +181,52 @@ UIPickerViewDataSource, UITextFieldDelegate {
         titles.text  = pb.string
     }
     
+    @objc func pasteToImage() {
+        let pb: UIPasteboard = UIPasteboard.general;
+        ImageIndicator.text  = pb.string
+    }
+    
+    @objc func pasteToIntro() {
+        let pb: UIPasteboard = UIPasteboard.general;
+        IntroIndicator.text  = pb.string
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(false)
+        
     }
     
     func setGesture(){
         //Auto paste Right -> Name
         var swipeRight = UISwipeGestureRecognizer()
-        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(pasteToName as () -> Void))
+        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(pasteToImage as () -> Void))
         swipeRight.direction = .right
         self.view.addGestureRecognizer(swipeRight)
         
         //Auto paste Left -> Home
         var swipeLeft = UISwipeGestureRecognizer()
-        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(pasteToHome as () -> Void))
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(pasteToName as () -> Void))
         swipeLeft.direction = .left
         self.view.addGestureRecognizer(swipeLeft)
         
         //Auto paste Longpress -> Title
         var longPress = UILongPressGestureRecognizer()
-        longPress = UILongPressGestureRecognizer(target: self, action: #selector(pasteToTitle as () -> Void))
-        longPress.minimumPressDuration = 1.25
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(pasteToHome as () -> Void))
+        longPress.minimumPressDuration = 1
         self.view.addGestureRecognizer(longPress)
+        
+        //Auto paste Up -> Image
+        var swipeUp = UISwipeGestureRecognizer()
+        swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(pasteToIntro as () -> Void))
+        swipeUp.direction = .up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        
+        //Auto paste Down -> INTRO
+        var swipeDown = UISwipeGestureRecognizer()
+        swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(pasteToTitle as () -> Void))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
 
     }
     

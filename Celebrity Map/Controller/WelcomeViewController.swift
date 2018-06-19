@@ -36,7 +36,7 @@ final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
     
 }
 
-class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, notifyViewDelegate {
     
     //some view Init
     var menuView: MenuBtnView?
@@ -54,7 +54,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     var celebrityArray = [Celebrity]()
     var defaults = UserDefaults.standard
-    let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business"]
+    let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     var fullCelebrityArray = [Celebrity]()
 
 
@@ -69,7 +69,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     @IBOutlet weak var bounceDetailView: UIView!
     
+    //MARK - Notification View Initialization
+    var notifyView = notificationView()
     
+    //MARK - Share View Initialization
+    var shareView = ShareView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +90,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         locationManager.startUpdatingLocation()
         
         //Mapview Delegate
-        MainMapView.delegate = self as? MKMapViewDelegate
+        MainMapView.delegate = self
         
         //connect to Firebase
         self.roofRef = Database.database().reference()
@@ -99,11 +103,26 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //Save current category index
         defaults.set(0, forKey: "selectedCategory")
-        
+
         //Set navigationbar
         setNavgationBar()
         
+        
+        notifyView.generateNotificationButton(phoneFrameView: self.view, botView: self.bounceDetailView, navigationBar: (self.navigationController?.navigationBar)!)
+        
+        notifyView.generateCallOutView()
+        notifyView.delegate = self
+
+        
+        
         setBot()
+        
+        //MARK - Set ShareView
+        shareView.buildShareview(phoneFrame: view, frameOfTabBar: (tabBarController?.tabBar.frame)!, tabBarView: (self.tabBarController?.view)!)
+        
+//        shareView.buildShareview(phoneFrame: view, heightOfTabbar: (self.tabBarController?.tabBar.frame.height)!)
+        
+        
         
         SVProgressHUD.dismiss()
         
@@ -150,6 +169,22 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
                         if let newname = celebrityDictionary["title"]{
                             let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String, category: celebrityDictionary["category"] as! String)
+                            
+                                newCeleberity.getCreateTime(createTimeString: celebrityDictionary["createTime"] as! String)
+                                newCeleberity.address = celebrityDictionary["address"] as! String
+                            //image
+                            if let imageUrl = celebrityDictionary["image"]{
+                                newCeleberity.imageUrl = imageUrl as? String
+                            }else{
+                            
+                            }
+                            
+                            //intro text
+                            if let intro = celebrityDictionary["intro"]{
+                                newCeleberity.intro = intro as? String
+                            }
+                            
+                            
                             self.celebrityArray.append(newCeleberity)
                         }
                     }
@@ -157,6 +192,18 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 
                     self.dropDownAlert(title: "\(self.celebrityArray.count) Celebrities loded!")
                     self.loadCelebrityAnnotation()
+                    self.notifyView.loadNotification(celebrityArray: self.celebrityArray)
+                
+                    //Refresh button
+                    let refreshableCount = self.defaults.integer(forKey: "refresh")
+                    if refreshableCount != self.celebrityArray.count {
+                        self.defaults.set(self.celebrityArray.count, forKey: "refresh")
+                        self.refreshBtn.isHidden = false
+                        self.rotate(imageView: self.refreshBtn, aCircleTime: 3)
+                    }else{
+                        self.refreshBtn.isHidden = true
+                    }
+                
                     // Loading progress show
                     SVProgressHUD.dismiss()
                 }
@@ -169,6 +216,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     func loadCelebrityAnnotation() -> Void {
         let selectedIndex = defaults.integer(forKey: "selectedCategory")
         let selectedCategory = cetegoryArray[selectedIndex]
+        
+        //Mark - bug may here!!
+        fullCelebrityArray = celebrityArray
+
         
         if selectedIndex == 0 && onlyOnceRemove == 0{
             fullCelebrityArray = celebrityArray
@@ -257,6 +308,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
 
+
     
     @objc func showMenu() {
         shareButtonOutlet.isEnabled = false
@@ -290,11 +342,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var locatedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     var botNameLabel = UILabel(frame: CGRect(x: 20, y: 15, width: 0, height: 21))
     var botTextView = UITextView()
+    var botImageDetail = UIImage()
+    var botImageView = UIImageView()
+    var botAddressLabel = UILabel()
+    var refreshBtn = UIButton()
 
-
-    
     func setBot(){
-        print("View height \(self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!), Tab height \(self.view.frame.height)")
         
         //UIVIEW Animation
         
@@ -307,7 +360,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         self.bounceDetailView.backgroundColor = UIColor.white
         self.bounceDetailView.alpha = 0
-        
+        self.bounceDetailView.layer.borderColor = UIColor.gray.cgColor
+        self.bounceDetailView.layer.borderWidth = 0.5
         //addcomponents to the botview
         
         //1. botNameLabel
@@ -319,13 +373,23 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         botNameLabel.adjustsFontSizeToFitWidth = true
         self.bounceDetailView.addSubview(botNameLabel)
         
-        botTextView = UITextView(frame: CGRect(x: 15, y: botNameLabel.frame.height + 20, width: botNameLabel.frame.width - 10, height: self.bounceDetailView.frame.height - botNameLabel.frame.height - 20))
+        botAddressLabel = UILabel(frame: CGRect(x: 20, y:  botNameLabel.frame.height + 20, width: self.view.frame.width / 2 - 30, height: 12))
+        botAddressLabel.textColor = UIColor.blue
+        botAddressLabel.font = UIFont.boldSystemFont(ofSize: 10)
+        botAddressLabel.textAlignment = .left
+        botAddressLabel.text = "Charlemagne, QC, Canada"
+        botAddressLabel.backgroundColor = UIColor.clear
+        botAddressLabel.adjustsFontSizeToFitWidth = true
+        self.bounceDetailView.addSubview(botAddressLabel)
+
+        
+        botTextView = UITextView(frame: CGRect(x: 15, y:botNameLabel.frame.height + botAddressLabel.frame.height + 25, width: botNameLabel.frame.width, height: self.bounceDetailView.frame.height - botNameLabel.frame.height - 30))
         botTextView.textColor = UIColor.gray
         botTextView.font = UIFont.systemFont(ofSize: 15.0)
         botTextView.textAlignment = .left
         botTextView.backgroundColor = UIColor.clear
         botTextView.isEditable = false
-        botTextView.layer.cornerRadius = 25
+        botTextView.isSelectable = false
         botTextView.text = "Ernesto Guevara (Spanish: [ˈtʃe ɣeˈβaɾa][4] June 14, 1928 – October 9, 1967)[1][5] was an Argentine Marxist revolutionary, physician, author, guerrilla leader, diplomat and military theorist. "
         self.bounceDetailView.addSubview(botTextView)
         
@@ -360,12 +424,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 
         
         //bot Image
-        let botImageDetail = UIImage(named: "nhl")
-        let botImageView = UIImageView(image: botImageDetail)
+        botImageDetail = UIImage(named: "blank_portrait")!
+        botImageView = UIImageView(image: botImageDetail)
         botImageView.frame = CGRect(x: self.bounceDetailView.frame.width / 2 + botShareBtn.frame.width + 30, y: 100, width: self.bounceDetailView.frame.width / 2 - botShareBtn.frame.width - 50, height: self.bounceDetailView.frame.height - 20)
         botImageView.center.y = self.bounceDetailView.frame.height / 2
         botImageView.layer.cornerRadius = 10
-        botImageView.contentMode = .scaleAspectFill
+        botImageView.contentMode = .scaleAspectFit
         botImageView.clipsToBounds = true
         self.bounceDetailView.addSubview(botImageView)
         
@@ -389,6 +453,20 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         locatedButton.layer.borderWidth = 5.0
         locatedButton.addTarget(self, action: #selector(locatedMeButtonClicked), for: .touchUpInside)
         self.view.addSubview(locatedButton)
+        
+        refreshBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        refreshBtn.backgroundColor = UIColor.clear
+        refreshBtn.setImage(UIImage(named: "refresh"), for: .normal)
+        refreshBtn.center.x = self.view.frame.width - 65
+        refreshBtn.center.y = 65 + notifyView.topHeights()
+        refreshBtn.backgroundColor = UIColor.clear
+        refreshBtn.layer.cornerRadius = notifyView.notiBtn().frame.size.width/2
+        refreshBtn.clipsToBounds = true
+        refreshBtn.layer.borderColor = UIColor.clear.cgColor
+        refreshBtn.isHidden = true
+        
+        refreshBtn.addTarget(self, action: #selector(refreshClicked), for: .touchUpInside)
+        self.view.addSubview(refreshBtn)
         }
     
     //MARK - Animation for bounceview
@@ -408,6 +486,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             
             self.locatedButton.frame.origin.y += self.bounceDetailView.frame.height
         }, completion: nil)
+        
     }
     
     //MARK - Tap annotation and responder
@@ -418,20 +497,82 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             // now do somthing with your event
             botNameLabel.text = "\(theEvent!)"
             botTextView.text = "\(eventAnnotation.celebrity.title)"
+            
+            botAddressLabel.text = "\(eventAnnotation.celebrity.address!)"
+            
+            //Set intro
+            if eventAnnotation.celebrity.intro != nil && eventAnnotation.celebrity.intro != ""{
+                botTextView.text = "\(eventAnnotation.celebrity.intro!)"
+            }else{
+                botTextView.text = "\(eventAnnotation.celebrity.title)"
+            }
+            
+            //Set imageview
+            if eventAnnotation.celebrity.imageUrl != nil && eventAnnotation.celebrity.imageUrl != ""{
+                            if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)") {
+                                do {
+                                    let data: Data = try Data(contentsOf: url)
+                                    self.botImageView.image = UIImage(data: data)
+                                } catch {
+                                    // error handling
+                                }
+                }
+            }
+            
             botViewAnimation()
-            
-            
-            
         }
     }
     
     func mapView(_ mapView: MKMapView,
                  didDeselect view: MKAnnotationView){
         botViewAnimationReverse()
+        
+        //Delay to change image back to default
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { // change 2 to desired number of seconds
+//            // Your code with delay
+//            self.botImageView.image = UIImage(named: "blank_portrait")
+//        }
+        
+//        self.botImageView.image = UIImage(named: "blank_portrait")
+        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+        self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
     }
     
     
+    @IBAction func refreshClicked(_ sender: UIButton) {
+        loadCelebrity()
+    }
     
+    func returnView() -> UIView{
+        return self.view
+    }
+    
+    func changeLocatedButton() {
+        if self.locatedButton.isHidden == false {
+            self.locatedButton.isHidden = true
+        }else{
+            self.locatedButton.isHidden = false
+        }
+    }
+    
+    func refreshButtonRotate(){
+        UIView.animate(withDuration: 2) {
+            self.refreshBtn.transform.rotated(by: 360)
+        }
+    }
+    
+
+    func rotate(imageView: UIButton, aCircleTime: Double) { //CABasicAnimation
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotationAnimation.fromValue = 0.0
+        rotationAnimation.toValue = Double.pi * 2 //Minus can be Direction
+        rotationAnimation.duration = aCircleTime
+        rotationAnimation.repeatCount = .infinity
+        imageView.layer.add(rotationAnimation, forKey: nil)
+    }
+    
+        
 }
 
 

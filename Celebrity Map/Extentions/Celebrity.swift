@@ -19,7 +19,10 @@ class Celebrity: NSObject {
     var hometown : String?
     var address : String?
     var category : String?
-    
+    var imageUrl : String?
+    var intro : String?
+    var createTime: Date?
+
     // Firebase
     private var roofRef: DatabaseReference!
     
@@ -30,7 +33,6 @@ class Celebrity: NSObject {
         self.hometown = hometown
         self.title = title
         self.category = category
-        
         super.init()
     }
     
@@ -59,7 +61,7 @@ class Celebrity: NSObject {
         let celebrityRef = self.roofRef.child("celebrity")
         let idRef = celebrityRef.childByAutoId()
         
-        let dict : [String : Any] = ["name": self.name as! String, "lat": self.hometownLatlng?.coordinate.latitude as! Double, "lng": self.hometownLatlng?.coordinate.longitude as! Double, "hometown": self.hometown as! String, "title": self.title, "category": self.category as! String, "createTime": self.getCurrentDateTime() , "address": self.address as! String]
+        let dict : [String : Any] = ["name": self.name , "lat": self.hometownLatlng?.coordinate.latitude as! Double, "lng": self.hometownLatlng?.coordinate.longitude as! Double, "hometown": self.hometown as! String, "title": self.title, "category": self.category as! String, "createTime": self.getCurrentDateTime() , "address": self.address as! String, "image": self.imageUrl as! String, "intro": self.intro as! String]
         
         idRef.setValue(dict)
         
@@ -71,6 +73,16 @@ class Celebrity: NSObject {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let currentTime = formatter.string(from: Date())
         return currentTime
+    }
+    
+    func getCreateTime(createTimeString: String){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        self.createTime = dateFormatter.date(from: createTimeString)
+//        let currentTime = getCurrentDateTime()
+//        Calendar.current.isDateInToday(createTime!)
+        
     }
     
 }
