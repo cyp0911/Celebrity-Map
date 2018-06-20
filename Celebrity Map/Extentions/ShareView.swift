@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+//import FacebookShare
+
 
 
 class ShareView {
@@ -16,18 +18,26 @@ class ShareView {
     var cancelBtn = UIButton()
     var numOfButtons : Int32 = 0
     
-    let providerArray = ["Facebook", "Twitter", "Weibo", "Moment", "Wechat"]
+    let providerArray = ["facebook", "twitter", "weibo", "moment", "wechat"]
+    var blackBackground = UIView()
+    var shareViewCalloutSwitch = 0
+
+    
+    var switchShiftHeight = 0
     
     func buildShareview(phoneFrame:UIView, frameOfTabBar: CGRect, tabBarView: UIView){
         screenView = phoneFrame
         
+        let bannerView:CGFloat = 25
         let heightOfTabbar = frameOfTabBar.height
-        let heightOfButtonBar:CGFloat = 90.0
+        let heightOfButtonBar:CGFloat = 90.0 + bannerView
         
-        shareView = UIView(frame: CGRect(x: 0, y: screenView.frame.height - heightOfTabbar - heightOfButtonBar, width: screenView.frame.width, height: heightOfButtonBar + heightOfTabbar))
-        shareView.clipsToBounds = true
+        switchShiftHeight = Int(heightOfTabbar + heightOfButtonBar)
+        
+        shareView = UIView(frame: CGRect(x: 0, y: screenView.frame.height, width: screenView.frame.width, height: heightOfButtonBar + heightOfTabbar))
+//        shareView.clipsToBounds = true
 //        shareView.layer.cornerRadius = 25
-        shareView.backgroundColor = UIColor.white
+        shareView.backgroundColor = UIColor(r: 211, g: 211, b: 211)
 //        shareView.isHidden = true
         tabBarView.addSubview(shareView)
         
@@ -39,9 +49,9 @@ class ShareView {
         
         
         //Cancel Button
-        cancelBtn = UIButton(frame: CGRect(x: 0, y: heightOfButtonBar, width: 100, height: 50))
+        cancelBtn = UIButton(frame: CGRect(x: 0, y: heightOfButtonBar, width: screenView.frame.width, height: 50))
         cancelBtn.center.x = screenView.frame.width / 2
-        cancelBtn.center.y = heightOfButtonBar + heightOfTabbar / 2
+        cancelBtn.center.y = heightOfButtonBar + (heightOfTabbar / 2)
         cancelBtn.titleLabel?.textAlignment = .center
         cancelBtn.backgroundColor = UIColor.white
         cancelBtn.setTitle("CANCEL", for: .normal)
@@ -52,7 +62,7 @@ class ShareView {
         shareView.addSubview(cancelBtn)
         
         //ButtonListView
-        let buttonListView = UIView(frame: CGRect(x: 0, y: 0, width: screenView.frame.width, height: heightOfButtonBar))
+        let buttonListView = UIView(frame: CGRect(x: 0, y: bannerView, width: screenView.frame.width, height: heightOfButtonBar - bannerView))
         buttonListView.backgroundColor = UIColor(r: 211, g: 211, b: 211)
         shareView.addSubview(buttonListView)
         
@@ -72,18 +82,116 @@ class ShareView {
             buttonListView.addSubview(listButton)
         }
         
+        //Label: ShareToLabel
+        let ShareToLabel = UILabel(frame: CGRect(x: screenView.frame.width / 2, y: 10, width: 300, height: 15))
+        ShareToLabel.center.x = screenView.frame.width / 2
+        ShareToLabel.textAlignment = .center
+        ShareToLabel.text = "ShareTo"
+        ShareToLabel.font = UIFont.systemFont(ofSize: 12.5)
+        ShareToLabel.textColor = UIColor.black
+        ShareToLabel.adjustsFontSizeToFitWidth = true
+        ShareToLabel.backgroundColor = UIColor(r: 211, g: 211, b: 211)
+        shareView.addSubview(ShareToLabel)
+
+        //Black background view
+        blackBackground = UIView(frame: CGRect(x: 0, y: 0, width: self.screenView.frame.width, height: self.screenView.frame.height))
+        blackBackground.backgroundColor = UIColor.black
+        blackBackground.alpha = 0.7
+        blackBackground.isHidden = true
+        screenView.addSubview(blackBackground)
+        
+        //Black background view
+        blackBackground = UIView(frame: CGRect(x: 0, y: 0, width: self.screenView.frame.width, height: self.screenView.frame.height))
+        blackBackground.backgroundColor = UIColor.black
+        blackBackground.alpha = 0.7
+        blackBackground.isHidden = true
+        self.screenView.addSubview(blackBackground)
+        
+        //set gesture
+        var tapBlack = UITapGestureRecognizer()
+        tapBlack = UITapGestureRecognizer(target: self, action: #selector(shutDownBlack as () -> Void))
+        self.blackBackground.addGestureRecognizer(tapBlack)
+        
     }
+    
+    
     
     @IBAction func listButtonCliked(_ sender: UIButton) {
         
-        print("clicked\(providerArray[sender.tag - 1])")
+        switch sender.tag {
+        case 1: break
+            //Facebook Sharing Button Clicked
+//            var content = LinkShareContent(url: URL(string: "google.ca")!)
+//            content.quote = "Great Apps"
+//
+//            
+//            let shareDialog = ShareDialog(content: content)
+//            shareDialog.mode = .native
+//            shareDialog.failsOnInvalidData = true
+//            shareDialog.completion = { result in
+//                // Handle share results
+//            }
+//            do{
+//            try shareDialog.show()
+//            }catch{
+//                print(error)
+//            }
+
+        default:
+            print("Failed!")
+        }
     }
 
     
     @IBAction func cancelClicked(_ sender: UIButton) {
-        
-        print("cancel")
+        callOutShareView(switchs: 1)
     }
+    
+    func callOutShareView(switchs: Int){
+        
+        shareViewCalloutSwitch = switchs
+        
+        if shareViewCalloutSwitch == 0 {
+            self.botViewAnimation()
+            shareViewCalloutSwitch = 1
+        }else if switchs == 1 {
+            self.botViewAnimationReverse()
+            shareViewCalloutSwitch = 0
+        }
+
+    }
+    
+    
+    //MARK - Animation for shareView
+    func botViewAnimation(){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn], animations: {
+            self.shareView.frame.origin.y -= self.shareView.frame.height
+            self.shareView.alpha = 1
+            self.blackBackground.isHidden = false
+
+            
+            //                self.locatedButton.frame.origin.y -= self.bounceDetailView.frame.height
+        }, completion: nil)
+    }
+    
+    func botViewAnimationReverse(){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut], animations: {
+            self.shareView.frame.origin.y += self.shareView.frame.height
+            self.shareView.alpha = 0
+            self.blackBackground.isHidden = true
+
+        }, completion:
+            { (finish) in
+        })
+        
+    }
+    
+    //Shut down BlackBG View When Cancel button be clicked in shareView
+    @objc func shutDownBlack(){
+        callOutShareView(switchs: 1)
+    }
+    
+
     
 }
 

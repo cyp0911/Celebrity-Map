@@ -97,6 +97,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //SVProgress
         SVProgressHUD.show()
+        self.rotate(imageView: self.refreshBtn, aCircleTime: 3)
+
         
         //Load data from database
         loadCelebrity()
@@ -126,12 +128,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         SVProgressHUD.dismiss()
         
-        
-        
-    
-        
-        
-
     }
     
     //
@@ -199,7 +195,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     if refreshableCount != self.celebrityArray.count {
                         self.defaults.set(self.celebrityArray.count, forKey: "refresh")
                         self.refreshBtn.isHidden = false
-                        self.rotate(imageView: self.refreshBtn, aCircleTime: 3)
                     }else{
                         self.refreshBtn.isHidden = true
                     }
@@ -399,6 +394,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         botShareBtn.setImage(UIImage(named: "shareBtn"), for: .normal)
         botShareBtn.center.x = self.view.frame.width / 2 + botShareBtn.frame.width / 2 + 5
         botShareBtn.center.y = self.bounceDetailView.frame.height * 1 / 4
+        botShareBtn.addTarget(self, action: #selector(shareToButtonClicked), for: .touchUpInside)
         self.bounceDetailView.addSubview(botShareBtn)
 
         let botMoreBtn = UIButton(frame: CGRect(x: botNameLabel.frame.width + 15, y: botNameLabel.frame.origin.y - 5, width: 50, height: 50))
@@ -467,7 +463,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         refreshBtn.addTarget(self, action: #selector(refreshClicked), for: .touchUpInside)
         self.view.addSubview(refreshBtn)
-        }
+        
+    }
+    
+    
     
     //MARK - Animation for bounceview
     func botViewAnimation(){
@@ -555,11 +554,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
     }
     
-    func refreshButtonRotate(){
-        UIView.animate(withDuration: 2) {
-            self.refreshBtn.transform.rotated(by: 360)
-        }
+    @IBAction func shareToButtonClicked(_ sender: UIButton) {
+        shareView.callOutShareView(switchs: 0)
     }
+
     
 
     func rotate(imageView: UIButton, aCircleTime: Double) { //CABasicAnimation
@@ -571,6 +569,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         rotationAnimation.repeatCount = .infinity
         imageView.layer.add(rotationAnimation, forKey: nil)
     }
+    
+
+    
+    
+    
     
         
 }
