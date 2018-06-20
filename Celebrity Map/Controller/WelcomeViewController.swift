@@ -56,7 +56,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var defaults = UserDefaults.standard
     let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     var fullCelebrityArray = [Celebrity]()
-
+    var publishSwitch = 1
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -74,6 +74,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //MARK - Share View Initialization
     var shareView = ShareView()
+    var currentShareCelebrity = Celebrity()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //SVProgress
         SVProgressHUD.show()
-        self.rotate(imageView: self.refreshBtn, aCircleTime: 3)
 
         
         //Load data from database
@@ -109,6 +109,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         //Set navigationbar
         setNavgationBar()
         
+        hideTabbar()
         
         notifyView.generateNotificationButton(phoneFrameView: self.view, botView: self.bounceDetailView, navigationBar: (self.navigationController?.navigationBar)!)
         
@@ -299,7 +300,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         let active = UIActivityViewController(activityItems: ["www.google.ca"], applicationActivities: nil)
         active.popoverPresentationController?.sourceView = self.view
         self.present(active, animated: true, completion: nil)
-
     }
     
 
@@ -345,9 +345,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     func setBot(){
         
         //UIVIEW Animation
-        
-        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
-        
+        if publishSwitch == 0 {
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
+        }else{
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+
+        }
         
         self.bounceDetailView.clipsToBounds = true
         self.bounceDetailView.layer.cornerRadius = 25
@@ -402,6 +405,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         botMoreBtn.setImage(UIImage(named: "moreBtn"), for: .normal)
         botMoreBtn.center.x = botShareBtn.center.x
         botMoreBtn.center.y = self.bounceDetailView.frame.height * 3 / 4
+        botMoreBtn.addTarget(self, action: #selector(moreBtnClicked), for: .touchUpInside)
         self.bounceDetailView.addSubview(botMoreBtn)
         
         //Draw seperating line
@@ -464,6 +468,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         refreshBtn.addTarget(self, action: #selector(refreshClicked), for: .touchUpInside)
         self.view.addSubview(refreshBtn)
         
+//        changetitle()
     }
     
     
@@ -511,7 +516,17 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                             if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)") {
                                 do {
                                     let data: Data = try Data(contentsOf: url)
+                                    eventAnnotation.celebrity.portrait = UIImage(data: data)!
+                                    
+                                    //pass selected image to shareview
+                                    shareView.currentAnnotationCelebrity = eventAnnotation.celebrity
+                                    currentShareCelebrity = eventAnnotation.celebrity
+
+                                    
                                     self.botImageView.image = UIImage(data: data)
+                                    
+
+                                    
                                 } catch {
                                     // error handling
                                 }
@@ -533,7 +548,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 //        }
         
 //        self.botImageView.image = UIImage(named: "blank_portrait")
-        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height - (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+//        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 300)
         self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
     }
     
@@ -541,6 +556,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     @IBAction func refreshClicked(_ sender: UIButton) {
         loadCelebrity()
     }
+    
+    @IBAction func moreBtnClicked(_ sender: UIButton) {        
+        self.performSegue(withIdentifier: "web", sender: sender)
+        }
     
     func returnView() -> UIView{
         return self.view
@@ -570,11 +589,39 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         imageView.layer.add(rotationAnimation, forKey: nil)
     }
     
-
     
+    //MARK - Prepare for Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "web" {
+            guard let webVC = segue.destination as? WebViewController else { print("???failded web")
+                return}
+        
+            webVC.gotCelebrity = currentShareCelebrity
+        }
+    }
     
+    //MARK - Change the title of navibar button
+    func changetitle() {
+        
+        let filterButton = UIButton(type: .custom)
+        filterButton.setImage(UIImage(named: "weibo"), for: .normal)
+        filterButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+//        filterButton.addTarget(self, action: #selector(Class.Methodname), for: .touchUpInside)
+        //Assign that UIButton to UIBarButtonItem
+        let item1 = UIBarButtonItem(customView: filterButton)
+        
+        //set UIBarButtonItem to navigationItem
+        self.navigationItem.setRightBarButtonItems([item1], animated: true)
+    }
     
-    
+    //Mark - set tab bar hidden
+    func hideTabbar(){
+        if publishSwitch == 0{
+            self.tabBarController?.tabBar.isHidden = true
+        }else{
+            self.tabBarController?.tabBar.isHidden = false
+        }
+    }
         
 }
 

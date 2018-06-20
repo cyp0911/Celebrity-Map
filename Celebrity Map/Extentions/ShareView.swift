@@ -22,6 +22,7 @@ class ShareView {
     var blackBackground = UIView()
     var shareViewCalloutSwitch = 0
 
+    var currentAnnotationCelebrity = Celebrity()
     
     var switchShiftHeight = 0
     
@@ -118,27 +119,17 @@ class ShareView {
     
     @IBAction func listButtonCliked(_ sender: UIButton) {
         
+        let currentView = getCurrentViewController()
+        let shareURL = NSURL(string: "http://www.baidu.com")
+        let image = currentAnnotationCelebrity.portrait
         switch sender.tag {
-        case 1: break
-            //Facebook Sharing Button Clicked
-//            var content = LinkShareContent(url: URL(string: "google.ca")!)
-//            content.quote = "Great Apps"
-//
-//            
-//            let shareDialog = ShareDialog(content: content)
-//            shareDialog.mode = .native
-//            shareDialog.failsOnInvalidData = true
-//            shareDialog.completion = { result in
-//                // Handle share results
-//            }
-//            do{
-//            try shareDialog.show()
-//            }catch{
-//                print(error)
-//            }
-
-        default:
-            print("Failed!")
+        case 1:
+            let text = "Do you konw \(currentAnnotationCelebrity.name) is a \(currentAnnotationCelebrity.category ?? "???") celebrity come from \(currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
+            let active = UIActivityViewController(activityItems: [image, text, shareURL!], applicationActivities: nil)
+//            active.popoverPresentationController?.sourceView = currentView?.view
+            currentView?.present(active, animated: true, completion: nil)
+            default:
+                print("Failed!")
         }
     }
 
@@ -191,7 +182,18 @@ class ShareView {
         callOutShareView(switchs: 1)
     }
     
-
+    func getCurrentViewController() -> UIViewController? {
+        
+        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+            var currentController: UIViewController! = rootController
+            while( currentController.presentedViewController != nil ) {
+                currentController = currentController.presentedViewController
+            }
+            return currentController
+        }
+        return nil
+        
+    }
     
 }
 

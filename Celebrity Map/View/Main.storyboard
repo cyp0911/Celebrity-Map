@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,23 +35,50 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Celebrity Map" id="DLk-Qt-Ok5">
-                        <barButtonItem key="rightBarButtonItem" image="share" id="9ih-Y3-RCm">
-                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="shareButtonClicked:" destination="BYZ-38-t0r" id="SBu-Zh-vJz"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Celebrity Map" id="DLk-Qt-Ok5"/>
                     <connections>
                         <outlet property="MainMapView" destination="GAy-Ao-osI" id="ov2-PY-2po"/>
                         <outlet property="bounceDetailView" destination="RBs-aG-0jZ" id="U0K-lf-04m"/>
-                        <outlet property="shareButtonOutlet" destination="9ih-Y3-RCm" id="NZq-HB-u9y"/>
+                        <segue destination="qmX-wO-z6t" kind="show" identifier="web" id="03q-sU-13H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2015.2" y="133.5832083958021"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="vDF-YG-wI5">
+            <objects>
+                <viewController id="qmX-wO-z6t" customClass="WebViewController" customModule="Celebrity_Map" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rpO-hT-kie">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vz7-ee-XQJ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vz7-ee-XQJ" firstAttribute="bottom" secondItem="gZ0-Ky-Sep" secondAttribute="bottom" id="196-Rs-ZG0"/>
+                            <constraint firstItem="vz7-ee-XQJ" firstAttribute="trailing" secondItem="gZ0-Ky-Sep" secondAttribute="trailing" id="Ycw-7i-1QN"/>
+                            <constraint firstItem="vz7-ee-XQJ" firstAttribute="leading" secondItem="gZ0-Ky-Sep" secondAttribute="leading" id="aZQ-vI-3YB"/>
+                            <constraint firstItem="vz7-ee-XQJ" firstAttribute="top" secondItem="gZ0-Ky-Sep" secondAttribute="top" id="peT-5a-Eku"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gZ0-Ky-Sep"/>
+                    </view>
+                    <connections>
+                        <outlet property="webWindow" destination="vz7-ee-XQJ" id="YZG-cr-n5e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cw9-9a-INl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2960.8000000000002" y="133.5832083958021"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="1Ef-WF-wHR">
@@ -254,7 +280,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="share" width="24" height="24"/>
         <image name="worldwide" width="25" height="25"/>
     </resources>
 </document>

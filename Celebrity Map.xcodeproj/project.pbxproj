@@ -10,6 +10,7 @@
 		3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */; };
 		3D579B9320D2CE69009B970C /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D579B9220D2CE69009B970C /* SubmitViewController.swift */; };
 		3D579B9520D2F908009B970C /* DatabaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D579B9420D2F908009B970C /* DatabaseOperation.swift */; };
+		3D59678A20DAB5B3002386BB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678920DAB5B3002386BB /* WebViewController.swift */; };
 		3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FB20D097D100E9B886 /* ButtonClicked.swift */; };
 		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
 		3D67288920D5EEB3004B610D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D67288820D5EEB3004B610D /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 		3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D579B9220D2CE69009B970C /* SubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewController.swift; sourceTree = "<group>"; };
 		3D579B9420D2F908009B970C /* DatabaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseOperation.swift; sourceTree = "<group>"; };
+		3D59678920DAB5B3002386BB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		3D6488FB20D097D100E9B886 /* ButtonClicked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonClicked.swift; sourceTree = "<group>"; };
 		3D6488FD20D09E9F00E9B886 /* Celebrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebrity.swift; sourceTree = "<group>"; };
 		3D67288820D5EEB3004B610D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				3D82E3F620D07418008DD653 /* WelcomeViewController.swift */,
 				3D579B9220D2CE69009B970C /* SubmitViewController.swift */,
+				3D59678920DAB5B3002386BB /* WebViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				3D67288D20D73102004B610D /* notificationView.swift in Sources */,
 				3D67289320D977B7004B610D /* UIColor.swift in Sources */,
 				3D579B9520D2F908009B970C /* DatabaseOperation.swift in Sources */,
+				3D59678A20DAB5B3002386BB /* WebViewController.swift in Sources */,
 				3D67288F20D840E0004B610D /* notifyEntry.swift in Sources */,
 				3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */,
 			);

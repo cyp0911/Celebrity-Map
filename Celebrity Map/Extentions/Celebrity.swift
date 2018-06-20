@@ -22,6 +22,7 @@ class Celebrity: NSObject {
     var imageUrl : String?
     var intro : String?
     var createTime: Date?
+    var portrait = UIImage()
 
     // Firebase
     private var roofRef: DatabaseReference!
