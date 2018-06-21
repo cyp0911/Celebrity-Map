@@ -56,7 +56,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var defaults = UserDefaults.standard
     let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     var fullCelebrityArray = [Celebrity]()
-    var publishSwitch = 0
+    var publishSwitch = ""
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -83,6 +83,9 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         //Register the Mapview
 //        MainMapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
 //
+        publishSwitch = "\(UIDevice.current.identifierForVendor?.uuidString as! String)"
+        
+        print("\(publishSwitch)---59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C")
         
         //TODO:Set up the location manager here.
         locationManager.delegate = self
@@ -345,11 +348,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     func setBot(){
         
         //UIVIEW Animation
-        if publishSwitch == 0 {
-            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
-        }else{
+        if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
             self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
-
+        }else{
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
         }
         
         self.bounceDetailView.clipsToBounds = true
@@ -549,11 +551,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
 //        self.botImageView.image = UIImage(named: "blank_portrait")
 //        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 300)
-        if publishSwitch == 0 {
-            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
-        }else{
+        if publishSwitch == "UID59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
             self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
-            
+        }else{
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
         }
         self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
     }
@@ -630,10 +631,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //Mark - set tab bar hidden
     func hideTabbar(){
-        if publishSwitch == 0{
-            self.tabBarController?.tabBar.isHidden = true
-        }else{
+        if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C"{
+            print("1111")
             self.tabBarController?.tabBar.isHidden = false
+        }else{
+            self.tabBarController?.tabBar.isHidden = true
         }
     }
         
