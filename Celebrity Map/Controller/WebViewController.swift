@@ -9,7 +9,7 @@
 import WebKit
 import UIKit
 
-class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate {
+class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate, WKNavigationDelegate {
     
     var gotCelebrity = Celebrity()
     
@@ -22,6 +22,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate {
         setweb()
         
         webWindow.uiDelegate = self
+        webWindow.navigationDelegate = self
         
         
         setnavi()
@@ -39,12 +40,13 @@ class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate {
         
         webWindow.allowsLinkPreview = false
         webWindow.allowsBackForwardNavigationGestures = false
-
+        
         
         webWindow.layer.borderWidth = 1
         webWindow.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
         webWindow.allowsBackForwardNavigationGestures = false
-        
+//        webView.dataDetectorTypes.remove(UIDataDetectorTypes.all)
+
     }
     
     func setweb(){
@@ -101,5 +103,25 @@ class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate {
         _ = navigationController?.popViewController(animated: true)
 
     }
+    
+    //MARK - Disable all links in webview
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == .linkClicked {
+            return false
+        }
+        return true
+    }
+    
+    var isInitialLoad = true
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        if self.isInitialLoad {
+            self.isInitialLoad = false
+            print("okok")
+        } else {
+            webView.stopLoading()
+        }
+    }
+
 
 }

@@ -214,12 +214,11 @@ class notificationView{
         
         if callOutViewSwitch == false {
             print("scale1")
-            UIView.animate(withDuration: 0.01, animations: {
+            UIView.animate(withDuration: 0.001, animations: {
                 self.callOutView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
                 self.callOutView.alpha = 0
             }, completion:
                 { (finish) in
-                    print("finished")
                     UIView.animate(withDuration: 0.5, animations: {
                         self.callOutView.transform = CGAffineTransform(scaleX: 1, y: 1)
                         self.callOutView.alpha = 1
@@ -227,15 +226,13 @@ class notificationView{
             })
 
         }else if callOutViewSwitch == true{
-            print("scale2")
             print(callOutView.frame.width)
             UIView.animate(withDuration: 0.5, animations: {
                 self.callOutView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
                 self.callOutView.alpha = 0
             }, completion:
                 { (finish) in
-                    print("finished")
-                    UIView.animate(withDuration: 0.01, animations: {
+                    UIView.animate(withDuration: 0.001, animations: {
                         self.callOutView.transform = CGAffineTransform(scaleX: 1, y: 1)
                         self.callOutView.alpha = 1
                         self.callOutView.isHidden = true

@@ -543,20 +543,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                  didDeselect view: MKAnnotationView){
         botViewAnimationReverse()
         
-        //Delay to change image back to default
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { // change 2 to desired number of seconds
-//            // Your code with delay
-//            self.botImageView.image = UIImage(named: "blank_portrait")
-//        }
-        
-//        self.botImageView.image = UIImage(named: "blank_portrait")
-//        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 300)
-        if publishSwitch == "UID59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
-            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
-        }else{
-            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
-        }
-        self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
+        confirmBounceView()
     }
     
     
@@ -632,10 +619,21 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     //Mark - set tab bar hidden
     func hideTabbar(){
         if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C"{
-            print("1111")
             self.tabBarController?.tabBar.isHidden = false
         }else{
             self.tabBarController?.tabBar.isHidden = true
+        }
+    }
+    
+    //Mark - confirm the locatoin of bounce view
+    func confirmBounceView(){
+        if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
+        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+            self.locatedButton.center.y = (self.tabBarController?.tabBar.frame.minY)! - 65
+
+        }else{
+        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
+        self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
         }
     }
         
