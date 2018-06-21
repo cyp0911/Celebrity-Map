@@ -56,7 +56,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var defaults = UserDefaults.standard
     let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     var fullCelebrityArray = [Celebrity]()
-    var publishSwitch = 1
+    var publishSwitch = 0
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -549,6 +549,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
 //        self.botImageView.image = UIImage(named: "blank_portrait")
 //        self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 300)
+        if publishSwitch == 0 {
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
+        }else{
+            self.bounceDetailView.frame = CGRect(x: 0, y: self.view.frame.height -         (self.tabBarController?.tabBar.frame.height)!, width: self.view.frame.width, height: 150)
+            
+        }
         self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
     }
     
@@ -574,7 +580,15 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     @IBAction func shareToButtonClicked(_ sender: UIButton) {
-        shareView.callOutShareView(switchs: 0)
+//        shareView.callOutShareView(switchs: 0)
+//        let shareURL = NSURL(string: "http://www.google.com")
+        let image = currentShareCelebrity.portrait
+        
+        let text = "Do you konw \(currentShareCelebrity.name) is a \(currentShareCelebrity.category ?? "???") celebrity come from \(currentShareCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
+        
+        let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+        //            active.popoverPresentationController?.sourceView = currentView?.view
+        self.present(active, animated: true, completion: nil)
     }
 
     

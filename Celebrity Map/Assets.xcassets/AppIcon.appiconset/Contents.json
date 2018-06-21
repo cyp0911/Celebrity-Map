@@ -45,7 +45,7 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "IphoneApp@3x.png",
+      "filename" : "IphoneNotification@3x-1.png",
       "scale" : "3x"
     },
     {
@@ -105,7 +105,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "iTunesArtwork@2x.png",
+      "filename" : "itunesIcon.png",
       "scale" : "1x"
     }
   ],
