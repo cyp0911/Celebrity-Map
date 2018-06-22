@@ -18,8 +18,7 @@ UIPickerViewDataSource, UITextFieldDelegate {
     // Variable Initialization
     var selectedPickerViewItem : String = "Sport"
     var celebrityArray = [Celebrity]()
-
-  
+    
     
     // Outlet Initialization
     @IBOutlet weak var nameTextField: UITextField!

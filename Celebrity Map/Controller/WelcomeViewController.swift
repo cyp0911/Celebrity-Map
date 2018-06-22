@@ -74,7 +74,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //MARK - Share View Initialization
     var shareView = ShareView()
-    var currentShareCelebrity = Celebrity()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -337,7 +336,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     
     //Mark - Button Init
-    var locatedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    var locatedButton = UIButton()
     var botNameLabel = UILabel(frame: CGRect(x: 20, y: 15, width: 0, height: 21))
     var botTextView = UITextView()
     var botImageDetail = UIImage()
@@ -346,6 +345,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var refreshBtn = UIButton()
 
     func setBot(){
+        let btnSize = self.view.frame.height / 12
         
         //UIVIEW Animation
         if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
@@ -423,27 +423,41 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         RightLine.center.y = self.bounceDetailView.frame.height / 2
         self.bounceDetailView.addSubview(RightLine)
 
+        //shadow view
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        outerView.clipsToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 1
+        outerView.layer.shadowOffset = CGSize.zero
+        outerView.layer.shadowRadius = 25
+        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 25).cgPath
 
         
         //bot Image
         botImageDetail = UIImage(named: "blank_portrait")!
         botImageView = UIImageView(image: botImageDetail)
-        botImageView.frame = CGRect(x: self.bounceDetailView.frame.width / 2 + botShareBtn.frame.width + 30, y: 100, width: self.bounceDetailView.frame.width / 2 - botShareBtn.frame.width - 50, height: self.bounceDetailView.frame.height - 20)
+        let heightIndex = self.bounceDetailView.frame.height  - 30
+        botImageView.frame = CGRect(x: RightLine.frame.maxX + 30, y: 100, width: ((self.view.frame.width - RightLine.frame.maxX) - 30), height: heightIndex)
+        botImageView.center.x = (self.view.frame.width - RightLine.frame.maxX) / 2 + RightLine.frame.maxX
         botImageView.center.y = self.bounceDetailView.frame.height / 2
-        botImageView.layer.cornerRadius = 10
-        botImageView.contentMode = .scaleAspectFit
+        botImageView.layer.cornerRadius = 25
+        botImageView.contentMode = .scaleAspectFill
         botImageView.clipsToBounds = true
+        outerView.addSubview(botImageView)
         self.bounceDetailView.addSubview(botImageView)
         
+        
+        
         //Top indicator short line
-        let topLine = UIView(frame: CGRect(x: 20, y: 0, width: 20, height: 2))
-        topLine.center.x = self.bounceDetailView.frame.width / 2
-        topLine.backgroundColor = UIColor.gray
-        topLine.layer.cornerRadius = 25
-        topLine.center.y = 10
-        self.bounceDetailView.addSubview(topLine)
+//        let topLine = UIView(frame: CGRect(x: 20, y: 0, width: 20, height: 2))
+//        topLine.center.x = self.bounceDetailView.frame.width / 2
+//        topLine.backgroundColor = UIColor.gray
+//        topLine.layer.cornerRadius = 25
+//        topLine.center.y = 10
+//        self.bounceDetailView.addSubview(topLine)
 
         //located button
+        locatedButton = UIButton(frame: CGRect(x: 0, y: 0, width: btnSize, height: btnSize))
         locatedButton.backgroundColor = UIColor.clear
         locatedButton.setImage(UIImage(named: "LocateMe"), for: .normal)
         locatedButton.center.x = self.view.frame.width - 65
@@ -456,7 +470,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         locatedButton.addTarget(self, action: #selector(locatedMeButtonClicked), for: .touchUpInside)
         self.view.addSubview(locatedButton)
         
-        refreshBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        refreshBtn = UIButton(frame: CGRect(x: 0, y: 0, width: btnSize, height: btnSize))
         refreshBtn.backgroundColor = UIColor.clear
         refreshBtn.setImage(UIImage(named: "refresh"), for: .normal)
         refreshBtn.center.x = self.view.frame.width - 65
@@ -514,27 +528,45 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             }
             
             //Set imageview
-            if eventAnnotation.celebrity.imageUrl != nil && eventAnnotation.celebrity.imageUrl != ""{
-                            if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)") {
-                                do {
-                                    let data: Data = try Data(contentsOf: url)
-                                    eventAnnotation.celebrity.portrait = UIImage(data: data)!
-                                    
-                                    //pass selected image to shareview
-                                    shareView.currentAnnotationCelebrity = eventAnnotation.celebrity
-                                    currentShareCelebrity = eventAnnotation.celebrity
+            var problemOccur = 0
+            shareView.currentAnnotationCelebrity = eventAnnotation.celebrity
+            if var imageTempo = getSavedImage(named: eventAnnotation.celebrity.name){
+                let imageHeightIndex = imageTempo.size.height
+                imageTempo = cropToBounds(image: imageTempo, width: Double(imageHeightIndex * 3 / 4), height: Double(imageHeightIndex))
+                eventAnnotation.celebrity.portrait = imageTempo
+            } else {
+                problemOccur = 1
+            }
+            
 
-                                    
-                                    self.botImageView.image = UIImage(data: data)
-                                    
+            
+            
+            if eventAnnotation.celebrity.portrait == UIImage(named: "blank_portrait")! || problemOccur == 1{
+                    if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)"){
+                    do {
+                        let data: Data = try Data(contentsOf: url)
+                        var imageTempo = UIImage(data: data)
+                        let imageHeightIndex = imageTempo?.size.height
+                        
+                        print("normalheight\(imageHeightIndex),double\(Double(imageHeightIndex! * 3 / 4))")
+                        
+                        imageTempo = cropToBounds(image: imageTempo!, width: Double(imageHeightIndex! * 3 / 4), height: Double(imageHeightIndex!))
+                        
+                        _ = saveImage(image: imageTempo!, name: "\(eventAnnotation.celebrity.name)")
+                        eventAnnotation.celebrity.portrait = imageTempo!
+                        problemOccur = 0
+                        print("222normalheight\(imageTempo?.size.height),double\(Double((imageTempo?.size.width)!))")
 
-                                    
-                                } catch {
-                                    // error handling
-                                }
+                    } catch {
+                        // error handling
+                        eventAnnotation.celebrity.portrait = UIImage(named: "blank_portrait")!
+                    }
+                    
                 }
             }
             
+            //Set the imageview on bot frame
+            self.botImageView.image = eventAnnotation.celebrity.portrait
             botViewAnimation()
         }
     }
@@ -568,15 +600,16 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     @IBAction func shareToButtonClicked(_ sender: UIButton) {
-//        shareView.callOutShareView(switchs: 0)
+        shareView.callOutShareView(switchs: 0)
 //        let shareURL = NSURL(string: "http://www.google.com")
-        let image = currentShareCelebrity.portrait
+        let image = shareView.currentAnnotationCelebrity.portrait
         
-        let text = "Do you konw \(currentShareCelebrity.name) is a \(currentShareCelebrity.category ?? "???") celebrity come from \(currentShareCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
+        let text = "Do you konw \(shareView.currentAnnotationCelebrity.name) is a \(shareView.currentAnnotationCelebrity.category ?? "???") celebrity come from \(shareView.currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
         
         let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
         //            active.popoverPresentationController?.sourceView = currentView?.view
-        self.present(active, animated: true, completion: nil)
+//        self.present(active, animated: true, completion: nil)
+        
     }
 
     
@@ -598,7 +631,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             guard let webVC = segue.destination as? WebViewController else { print("???failded web")
                 return}
         
-            webVC.gotCelebrity = currentShareCelebrity
+            webVC.gotCelebrity = shareView.currentAnnotationCelebrity
         }
     }
     
@@ -636,9 +669,67 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         self.locatedButton.center.y = self.bounceDetailView.frame.minY - 65
         }
     }
+    
+    //MARK - Save and Load Image locally
+    func saveImage(image: UIImage, name: String) -> Bool {
+        guard let data = UIImageJPEGRepresentation(image, 1) ?? UIImagePNGRepresentation(image) else {
+            return false
+        }
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        do {
+            try data.write(to: directory.appendingPathComponent("\(name).png")!)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+    
+    func getSavedImage(named: String) -> UIImage? {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
+        }
+        return nil
+    }
+    
+    
+    
+    func cropToBounds(image: UIImage, width: Double, height: Double) -> UIImage {
         
+        let cgimage = image.cgImage!
+        let contextImage: UIImage = UIImage(cgImage: cgimage)
+        let contextSize: CGSize = contextImage.size
+        var posX: CGFloat = 0.0
+        var posY: CGFloat = 0.0
+        var cgwidth: CGFloat = CGFloat(width)
+        var cgheight: CGFloat = CGFloat(height)
+        
+        // See what size is longer and create the center off of that
+        if contextSize.width > contextSize.height {
+//            posX = ((contextSize.width - contextSize.height) / 2)
+            posX = ((contextSize.width - contextSize.height) / 2)
+            posY = 0
+            cgwidth = contextSize.height
+            cgheight = contextSize.height
+        } else {
+            posX = 0
+            posY = 10
+            cgwidth = contextSize.width
+            cgheight = contextSize.width
+        }
+        
+        let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
+        // Create bitmap image from context using the rect
+        let imageRef: CGImage = cgimage.cropping(to: rect)!
+        
+        // Create a new image based on the imageRef and rotate back to the original orientation
+        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+        
+        return image
+    }
 }
-
 
 
     

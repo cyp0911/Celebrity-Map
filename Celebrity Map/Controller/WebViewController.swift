@@ -73,7 +73,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, WKUIDelegate, WKNa
 //        let backButton = UIBarButtonItem(title: "back", style: .done, target: nil, action: nil)
 //        backButton.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
 //        backButton.action = #selector(backBtnClicked)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(backBtnClicked))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(backBtnClicked))
+        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "left")
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "left")
+
 
 //        navigationItem.leftBarButtonItem = backButton
 

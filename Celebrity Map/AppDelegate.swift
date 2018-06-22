@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

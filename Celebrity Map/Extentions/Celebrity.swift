@@ -63,6 +63,8 @@ class Celebrity: NSObject {
         let idRef = celebrityRef.childByAutoId()
         
         let dict : [String : Any] = ["name": self.name , "lat": self.hometownLatlng?.coordinate.latitude as! Double, "lng": self.hometownLatlng?.coordinate.longitude as! Double, "hometown": self.hometown as! String, "title": self.title, "category": self.category as! String, "createTime": self.getCurrentDateTime() , "address": self.address as! String, "image": self.imageUrl as! String, "intro": self.intro as! String]
+  
+        
         
         idRef.setValue(dict)
         

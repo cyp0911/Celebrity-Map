@@ -17,15 +17,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Please allow GPS when you using this app, this help us to provide you better service and information based on your current location. We promise not to share your location data with others.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Please allow GPS when you using this app, this help us to provide you better service and information based on your current location. We promise not to share your location data with others.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Let's see the celebrities who born near your location!</string>
+	<string>Please allow GPS when you using this app, this help us to provide you better service and information based on your current location. We promise not to share your location data with others.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

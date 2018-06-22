@@ -128,7 +128,9 @@ class ShareView {
             let active = UIActivityViewController(activityItems: [image, text, shareURL!], applicationActivities: nil)
 //            active.popoverPresentationController?.sourceView = currentView?.view
             currentView?.present(active, animated: true, completion: nil)
-            default:
+        case 2:
+            callOutShareView(switchs: 0)
+        default:
                 print("Failed!")
         }
     }
@@ -182,6 +184,8 @@ class ShareView {
         callOutShareView(switchs: 1)
     }
     
+    
+    
     func getCurrentViewController() -> UIViewController? {
         
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
@@ -192,7 +196,6 @@ class ShareView {
             return currentController
         }
         return nil
-        
     }
     
 }
