@@ -81,10 +81,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //Register the Mapview
 //        MainMapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-//
-        publishSwitch = "\(UIDevice.current.identifierForVendor?.uuidString as! String)"
-        
-        print("\(publishSwitch)---59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C")
+
+        publishSwitch = "\(UIDevice.current.identifierForVendor?.uuidString ?? "noid")"
         
         //TODO:Set up the location manager here.
         locationManager.delegate = self
@@ -125,7 +123,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         //MARK - Set ShareView
         shareView.buildShareview(phoneFrame: view, frameOfTabBar: (tabBarController?.tabBar.frame)!, tabBarView: (self.tabBarController?.view)!)
         
-//        shareView.buildShareview(phoneFrame: view, heightOfTabbar: (self.tabBarController?.tabBar.frame.height)!)
+        
         
         
         
@@ -133,7 +131,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
     }
     
-    //
     
 
     
@@ -167,10 +164,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 for(key, _) in celebrityDictionaries{
                     if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
                         if let newname = celebrityDictionary["title"]{
+                            print(newname)
                             let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String, category: celebrityDictionary["category"] as! String)
                             
                                 newCeleberity.getCreateTime(createTimeString: celebrityDictionary["createTime"] as! String)
-                                newCeleberity.address = celebrityDictionary["address"] as! String
+                            newCeleberity.address = (celebrityDictionary["address"] as! String)
                             //image
                             if let imageUrl = celebrityDictionary["image"]{
                                 newCeleberity.imageUrl = imageUrl as? String
@@ -189,15 +187,21 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     }
                 }
 
-                    self.dropDownAlert(title: "\(self.celebrityArray.count) Celebrities loded!")
                     self.loadCelebrityAnnotation()
                     self.notifyView.loadNotification(celebrityArray: self.celebrityArray)
                 
                     //Refresh button
                     let refreshableCount = self.defaults.integer(forKey: "refresh")
+//                    self.dropDownAlert(title: "\(self.celebrityArray.count) Celebrities loded!")
                     if refreshableCount != self.celebrityArray.count {
                         self.defaults.set(self.celebrityArray.count, forKey: "refresh")
+                        
+                        //Refresh button rotate and appear
                         self.refreshBtn.isHidden = false
+                        self.rotate(imageView: self.refreshBtn, aCircleTime: 2)
+                        
+                        let convertedArray = self.celebrityArray.sorted(by: { $0.createTime! > $1.createTime! })
+                        self.dropDownAlert(title: "<\(convertedArray.first!.name)> has been added by Programmer!")
                     }else{
                         self.refreshBtn.isHidden = true
                     }
@@ -231,7 +235,13 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 MainMapView.removeAnnotations(MainMapView.annotations)
                 onlyOnceRemove += 1
             }
-            MainMapView.addAnnotation(pin)
+            
+            // juage if shop on maprect: must in maprect
+            if MainMapView.contains(coordinate: (celebrityItem.hometownLatlng?.coordinate)!){
+                    MainMapView.addAnnotation(pin)
+            }else{
+                MainMapView.removeAnnotation(pin)
+            }
         }
         celebrityArray = fullCelebrityArray
 
@@ -345,7 +355,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var refreshBtn = UIButton()
 
     func setBot(){
-        let btnSize = self.view.frame.height / 12
+        let btnSize = self.view.frame.height / 15
         
         //UIVIEW Animation
         if publishSwitch == "59B12E56-EBC8-4CEA-8AC5-88CAAF41F39C" {
@@ -548,14 +558,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         var imageTempo = UIImage(data: data)
                         let imageHeightIndex = imageTempo?.size.height
                         
-                        print("normalheight\(imageHeightIndex),double\(Double(imageHeightIndex! * 3 / 4))")
                         
                         imageTempo = cropToBounds(image: imageTempo!, width: Double(imageHeightIndex! * 3 / 4), height: Double(imageHeightIndex!))
                         
                         _ = saveImage(image: imageTempo!, name: "\(eventAnnotation.celebrity.name)")
                         eventAnnotation.celebrity.portrait = imageTempo!
                         problemOccur = 0
-                        print("222normalheight\(imageTempo?.size.height),double\(Double((imageTempo?.size.width)!))")
 
                     } catch {
                         // error handling
@@ -578,9 +586,26 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         confirmBounceView()
     }
     
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//        let rect = MainMapView.visibleMapRect
+//        let mapPoint = MKMapPointMake(rect.origin.x, rect.origin.y)
+//        let coordinate = MKCoordinateForMapPoint(mapPoint)
+//        print("Rect1: \(coordinate.latitude)")
+//        print("Rect2: \(coordinate.longitude)")
+//
+//        print("user CHANGED map.")
+//        print(mapView.region.span.latitudeDelta)
+//        print(mapView.region.span.longitudeDelta)
+        
+        loadCelebrityAnnotation()
+        
+    }
+    
     
     @IBAction func refreshClicked(_ sender: UIButton) {
         loadCelebrity()
+        let today = self.defaults.integer(forKey: "todayUpdate")
+        self.dropDownAlert(title: "\(today) new celebries loaded, enjoy!")
     }
     
     @IBAction func moreBtnClicked(_ sender: UIButton) {        
@@ -602,11 +627,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     @IBAction func shareToButtonClicked(_ sender: UIButton) {
         shareView.callOutShareView(switchs: 0)
 //        let shareURL = NSURL(string: "http://www.google.com")
-        let image = shareView.currentAnnotationCelebrity.portrait
-        
-        let text = "Do you konw \(shareView.currentAnnotationCelebrity.name) is a \(shareView.currentAnnotationCelebrity.category ?? "???") celebrity come from \(shareView.currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
-        
-        let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+//        let image = shareView.currentAnnotationCelebrity.portrait
+//        
+//        let text = "Do you konw \(shareView.currentAnnotationCelebrity.name) is a \(shareView.currentAnnotationCelebrity.category ?? "???") celebrity come from \(shareView.currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
+//        
+//        let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
         //            active.popoverPresentationController?.sourceView = currentView?.view
 //        self.present(active, animated: true, completion: nil)
         
@@ -731,6 +756,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
 }
 
-
+extension MKMapView {
+    
+    func contains(coordinate: CLLocationCoordinate2D) -> Bool {
+        return MKMapRectContainsPoint(self.visibleMapRect, MKMapPointForCoordinate(coordinate))
+    }
+    
+}
     
 

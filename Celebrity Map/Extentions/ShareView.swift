@@ -120,18 +120,20 @@ class ShareView {
     @IBAction func listButtonCliked(_ sender: UIButton) {
         
         let currentView = getCurrentViewController()
-        let shareURL = NSURL(string: "http://www.baidu.com")
+//        let shareURL = NSURL(string: "https://itunes.apple.com/ca/app/google/id1401680756")
         let image = currentAnnotationCelebrity.portrait
+        
+        let text = "Do you konw \(currentAnnotationCelebrity.name) is a \(currentAnnotationCelebrity.category ?? "???") celebrity come from \(currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
+        let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+        active.popoverPresentationController?.sourceView = currentView?.view
+        
         switch sender.tag {
         case 1:
-            let text = "Do you konw \(currentAnnotationCelebrity.name) is a \(currentAnnotationCelebrity.category ?? "???") celebrity come from \(currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
-            let active = UIActivityViewController(activityItems: [image, text, shareURL!], applicationActivities: nil)
-//            active.popoverPresentationController?.sourceView = currentView?.view
             currentView?.present(active, animated: true, completion: nil)
         case 2:
-            callOutShareView(switchs: 0)
+            currentView?.present(active, animated: true, completion: nil)
         default:
-                print("Failed!")
+            currentView?.present(active, animated: true, completion: nil)
         }
     }
 

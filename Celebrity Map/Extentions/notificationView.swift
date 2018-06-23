@@ -31,7 +31,8 @@ class notificationView{
     var notiBoard = UITextView()
     
     var delegate: notifyViewDelegate?
-    
+    var defaults = UserDefaults.standard
+
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -195,6 +196,7 @@ class notificationView{
             }
         }
         
+        self.defaults.set(todayTotal, forKey: "todayUpdate")
         notifyContent = "\(notifyContent)Total \(todayTotal) \n\n\n"
         yestodayNotify = "\(yestodayNotify)Total \(yestodayTotal) \n\n\n"
 
