@@ -16,7 +16,6 @@ import Dropdowns
 import SVProgressHUD
 import RKDropdownAlert
 
-
 // MARK - Class to hold the info of annotation
 final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
     var coordinate: CLLocationCoordinate2D
@@ -57,6 +56,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     let cetegoryArray = ["ALL", "Sport", "Political", "Art", "Science", "Technology", "Business", "Entertainment"]
     var fullCelebrityArray = [Celebrity]()
     var publishSwitch = ""
+    
 
     //Mark - Firebase Initialization
     private var roofRef: DatabaseReference!
@@ -110,6 +110,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         setNavgationBar()
         
         hideTabbar()
+
         
         notifyView.generateNotificationButton(phoneFrameView: self.view, botView: self.bounceDetailView, navigationBar: (self.navigationController?.navigationBar)!)
         
@@ -119,6 +120,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         
         setBot()
+        
+
         
         //MARK - Set ShareView
         shareView.buildShareview(phoneFrame: view, frameOfTabBar: (tabBarController?.tabBar.frame)!, tabBarView: (self.tabBarController?.view)!)
@@ -598,6 +601,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 //        print(mapView.region.span.longitudeDelta)
         
         loadCelebrityAnnotation()
+
         
     }
     
@@ -754,6 +758,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         return image
     }
+    
+    
 }
 
 extension MKMapView {

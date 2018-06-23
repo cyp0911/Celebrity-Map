@@ -190,6 +190,7 @@ UIPickerViewDataSource, UITextFieldDelegate {
         IntroIndicator.text  = pb.string
     }
     
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(false)
         
@@ -226,6 +227,8 @@ UIPickerViewDataSource, UITextFieldDelegate {
         swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(pasteToTitle as () -> Void))
         swipeDown.direction = .down
         self.view.addGestureRecognizer(swipeDown)
+        
+    
 
     }
     

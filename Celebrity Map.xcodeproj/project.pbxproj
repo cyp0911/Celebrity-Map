@@ -10,7 +10,7 @@
 		3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */; };
 		3D579B9320D2CE69009B970C /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D579B9220D2CE69009B970C /* SubmitViewController.swift */; };
 		3D59678A20DAB5B3002386BB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678920DAB5B3002386BB /* WebViewController.swift */; };
-		3D59678E20DDE46A002386BB /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678D20DDE46A002386BB /* AnnotationView.swift */; };
+		3D59679020DE92FC002386BB /* viewforcelebrityAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678F20DE92FC002386BB /* viewforcelebrityAnnotation.swift */; };
 		3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FB20D097D100E9B886 /* ButtonClicked.swift */; };
 		3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6488FD20D09E9F00E9B886 /* Celebrity.swift */; };
 		3D67288920D5EEB3004B610D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D67288820D5EEB3004B610D /* Main.storyboard */; };
@@ -34,7 +34,7 @@
 		3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D579B9220D2CE69009B970C /* SubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewController.swift; sourceTree = "<group>"; };
 		3D59678920DAB5B3002386BB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		3D59678D20DDE46A002386BB /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
+		3D59678F20DE92FC002386BB /* viewforcelebrityAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewforcelebrityAnnotation.swift; sourceTree = "<group>"; };
 		3D6488FB20D097D100E9B886 /* ButtonClicked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonClicked.swift; sourceTree = "<group>"; };
 		3D6488FD20D09E9F00E9B886 /* Celebrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebrity.swift; sourceTree = "<group>"; };
 		3D67288820D5EEB3004B610D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				3D67288E20D840E0004B610D /* notifyEntry.swift */,
 				3D67289020D87F96004B610D /* ShareView.swift */,
 				3D67289220D977B7004B610D /* UIColor.swift */,
-				3D59678D20DDE46A002386BB /* AnnotationView.swift */,
+				3D59678F20DE92FC002386BB /* viewforcelebrityAnnotation.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -313,7 +313,6 @@
 				3D67289120D87F96004B610D /* ShareView.swift in Sources */,
 				3D70D2A820D589C400229C1E /* MenuBtnView.swift in Sources */,
 				3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */,
-				3D59678E20DDE46A002386BB /* AnnotationView.swift in Sources */,
 				3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */,
 				3D6488FE20D09E9F00E9B886 /* Celebrity.swift in Sources */,
 				3D82E3F520D07418008DD653 /* AppDelegate.swift in Sources */,
@@ -324,6 +323,7 @@
 				3D59678A20DAB5B3002386BB /* WebViewController.swift in Sources */,
 				3D67288F20D840E0004B610D /* notifyEntry.swift in Sources */,
 				3D82E3FD20D07418008DD653 /* Celebrity_Map.xcdatamodeld in Sources */,
+				3D59679020DE92FC002386BB /* viewforcelebrityAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
