@@ -88,4 +88,10 @@ class Celebrity: NSObject {
         
     }
     
+    func ifInRect(point1: Double, point2: Double, point3:Double,point4:Double){
+        
+        
+        
+    }
+    
 }

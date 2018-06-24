@@ -126,7 +126,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         //MARK - Set ShareView
         shareView.buildShareview(phoneFrame: view, frameOfTabBar: (tabBarController?.tabBar.frame)!, tabBarView: (self.tabBarController?.view)!)
         
-        
+        MainMapView.register(CelebrityAnnoView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+
         
         
         
@@ -224,7 +225,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //Mark - bug may here!!
         fullCelebrityArray = celebrityArray
-
+        
         
         if selectedIndex == 0 && onlyOnceRemove == 0{
             fullCelebrityArray = celebrityArray
@@ -232,25 +233,25 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             celebrityArray = self.celebrityArray.filter { $0.category == selectedCategory}
         }
         
+        MainMapView.removeAnnotations(MainMapView.annotations)
         for celebrityItem in celebrityArray {
             pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title, celebrity: celebrityItem)
-            if onlyOnceRemove > 0 {
-                MainMapView.removeAnnotations(MainMapView.annotations)
-                onlyOnceRemove += 1
-            }
+
             
             // juage if shop on maprect: must in maprect
-            if MainMapView.contains(coordinate: (celebrityItem.hometownLatlng?.coordinate)!){
-                    MainMapView.addAnnotation(pin)
-            }else{
-                MainMapView.removeAnnotation(pin)
+            if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
+                MainMapView.addAnnotation(pin)
             }
+            
+//            else{
+//                MainMapView.removeAnnotation(pin)
+//            }
+            
         }
         celebrityArray = fullCelebrityArray
 
     }
     
-
     //MARK - Back to user location
     func userLocation(location : CLLocation){
         if location.horizontalAccuracy > 0 {
@@ -589,20 +590,23 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         confirmBounceView()
     }
     
+    var mapingRect : mapRect?
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        let rect = MainMapView.visibleMapRect
-//        let mapPoint = MKMapPointMake(rect.origin.x, rect.origin.y)
-//        let coordinate = MKCoordinateForMapPoint(mapPoint)
-//        print("Rect1: \(coordinate.latitude)")
-//        print("Rect2: \(coordinate.longitude)")
+        let rect = MainMapView.visibleMapRect
+        let mapPoint = MKMapPointMake(rect.origin.x, rect.origin.y)
+        let coordinate = MKCoordinateForMapPoint(mapPoint)
+//        print("Top : \(coordinate.latitude)")
+//        print("Left : \(coordinate.longitude)")
 //
-//        print("user CHANGED map.")
-//        print(mapView.region.span.latitudeDelta)
-//        print(mapView.region.span.longitudeDelta)
+//        print("Bot \(coordinate.latitude - mapView.region.span.latitudeDelta)")
+//        print("Right \(coordinate.longitude + mapView.region.span.longitudeDelta)")
+        
+        mapingRect = mapRect(Top: coordinate.latitude, Bot: coordinate.latitude - mapView.region.span.latitudeDelta, Left: coordinate.longitude, Right: coordinate.longitude + mapView.region.span.longitudeDelta)
+//        let judge = mapingRect?.checkIfInside(point: CLLocationCoordinate2D(latitude: 44.6458149, longitude: -63.4534447))
+//        print("judge: \(judge!)")
+        
         
         loadCelebrityAnnotation()
-
-        
     }
     
     
