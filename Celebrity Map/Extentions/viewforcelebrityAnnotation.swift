@@ -23,11 +23,11 @@ private extension CelebrityAnnoView {
         guard annotation is CelebrityAnnotaion else { fatalError("Unexpected annotation type: \(annotation)") }
         //    CONFIGURE
         switch annotation.title {
-        case "Sidney Crosby":
+        case "Yinpeng Chen":
             markerTintColor = .purple
-            glyphImage = UIImage(named: "Sport")
+            glyphImage = UIImage(named: "groom")
         default:
-            markerTintColor = .green
+            markerTintColor = .red
             glyphImage = UIImage(named: "groom")
         }
         
