@@ -75,6 +75,9 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     //MARK - Share View Initialization
     var shareView = ShareView()
     
+    //MARK - Report View Initialization
+    var ReportView = reportView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -117,6 +120,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         notifyView.generateCallOutView()
         notifyView.delegate = self
 
+        //Report view
+//        ReportView.startReportView(phoneFrame: self.view, botView: self.bounceDetailView, navigationBar: (self.navigationController?.navigationBar)!)
         
         
         setBot()
@@ -227,19 +232,24 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         fullCelebrityArray = celebrityArray
         
         
-        if selectedIndex == 0 && onlyOnceRemove == 0{
-            fullCelebrityArray = celebrityArray
+        if selectedIndex == 0 || onlyOnceRemove == 0{
+            
         }else{
             celebrityArray = self.celebrityArray.filter { $0.category == selectedCategory}
         }
+        onlyOnceRemove += 1
         
-        MainMapView.removeAnnotations(MainMapView.annotations)
+        if ifRefreshOutside {
+            MainMapView.removeAnnotations(MainMapView.annotations)
+        }
+        
         for celebrityItem in celebrityArray {
-            pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.title, celebrity: celebrityItem)
+            pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.address, celebrity: celebrityItem)
 
             
             // juage if shop on maprect: must in maprect
             if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
+                
                 MainMapView.addAnnotation(pin)
             }
             
@@ -532,7 +542,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             botNameLabel.text = "\(theEvent!)"
             botTextView.text = "\(eventAnnotation.celebrity.title)"
             
-            botAddressLabel.text = "\(eventAnnotation.celebrity.address!)"
+            botAddressLabel.text = "\(eventAnnotation.celebrity.title)"
             
             //Set intro
             if eventAnnotation.celebrity.intro != nil && eventAnnotation.celebrity.intro != ""{
@@ -559,15 +569,15 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)"){
                     do {
                         let data: Data = try Data(contentsOf: url)
-                        var imageTempo = UIImage(data: data)
-                        let imageHeightIndex = imageTempo?.size.height
+                        if var imageTempo = UIImage(data: data){
+                            let imageHeightIndex = imageTempo.size.height
                         
                         
-                        imageTempo = cropToBounds(image: imageTempo!, width: Double(imageHeightIndex! * 3 / 4), height: Double(imageHeightIndex!))
+                            imageTempo = cropToBounds(image: imageTempo, width: Double(imageHeightIndex * 3 / 4), height: Double(imageHeightIndex))
                         
-                        _ = saveImage(image: imageTempo!, name: "\(eventAnnotation.celebrity.name)")
-                        eventAnnotation.celebrity.portrait = imageTempo!
-                        problemOccur = 0
+                            _ = saveImage(image: imageTempo, name: "\(eventAnnotation.celebrity.name)")
+                            eventAnnotation.celebrity.portrait = imageTempo
+                            problemOccur = 0}
 
                     } catch {
                         // error handling
@@ -591,6 +601,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     var mapingRect : mapRect?
+    var ifRefreshOutside : Bool = false
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let rect = MainMapView.visibleMapRect
         let mapPoint = MKMapPointMake(rect.origin.x, rect.origin.y)
@@ -600,6 +611,12 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 //
 //        print("Bot \(coordinate.latitude - mapView.region.span.latitudeDelta)")
 //        print("Right \(coordinate.longitude + mapView.region.span.longitudeDelta)")
+        if let ifRefresh = mapingRect?.checkIfRefresh(newTop: coordinate.latitude, newBot: coordinate.latitude - mapView.region.span.latitudeDelta, newLeft: coordinate.longitude, newRight: coordinate.longitude + mapView.region.span.longitudeDelta, time: onlyOnceRemove){
+            
+            ifRefreshOutside = ifRefresh
+            print("ifRefresh: \(ifRefresh)")
+
+        }
         
         mapingRect = mapRect(Top: coordinate.latitude, Bot: coordinate.latitude - mapView.region.span.latitudeDelta, Left: coordinate.longitude, Right: coordinate.longitude + mapView.region.span.longitudeDelta)
 //        let judge = mapingRect?.checkIfInside(point: CLLocationCoordinate2D(latitude: 44.6458149, longitude: -63.4534447))

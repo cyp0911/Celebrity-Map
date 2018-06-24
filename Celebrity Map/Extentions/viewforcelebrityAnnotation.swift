@@ -27,7 +27,7 @@ private extension CelebrityAnnoView {
             markerTintColor = .purple
             glyphImage = UIImage(named: "groom")
         default:
-            markerTintColor = .red
+            markerTintColor = .black
             glyphImage = UIImage(named: "groom")
         }
         

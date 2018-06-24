@@ -33,5 +33,23 @@ class mapRect{
         return false
     }
     
+    func checkIfRefresh(newTop: Double, newBot : Double, newLeft : Double, newRight : Double, time: Int) -> Bool {
+        let overlapRate = 0.5
+        if time == 0 {
+            return false
+        }
+        
+        
+        if (newTop < Bot + abs(overlapRate * (newTop - newBot))) || (newBot > Top - abs(overlapRate * (newBot - newTop))){
+            return true
+        }
+        
+        if (newRight < Left + abs(overlapRate * (newRight - newLeft))) || (newLeft > Right - abs(overlapRate * (newLeft - newRight))){
+            return true
+        }
+        
+        return false
+    }
+    
     
 }

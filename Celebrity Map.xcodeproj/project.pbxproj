@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D3681AA20D20ABA00FF5920 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */; };
 		3D3A4BD420DF0DE000D68DDA /* mapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3A4BD320DF0DE000D68DDA /* mapRect.swift */; };
+		3D3A4BD620DF333E00D68DDA /* reportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3A4BD520DF333E00D68DDA /* reportView.swift */; };
 		3D579B9320D2CE69009B970C /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D579B9220D2CE69009B970C /* SubmitViewController.swift */; };
 		3D59678A20DAB5B3002386BB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678920DAB5B3002386BB /* WebViewController.swift */; };
 		3D59679020DE92FC002386BB /* viewforcelebrityAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59678F20DE92FC002386BB /* viewforcelebrityAnnotation.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		3D3681A920D20ABA00FF5920 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D3A4BD320DF0DE000D68DDA /* mapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapRect.swift; sourceTree = "<group>"; };
+		3D3A4BD520DF333E00D68DDA /* reportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reportView.swift; sourceTree = "<group>"; };
 		3D579B9220D2CE69009B970C /* SubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewController.swift; sourceTree = "<group>"; };
 		3D59678920DAB5B3002386BB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		3D59678F20DE92FC002386BB /* viewforcelebrityAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewforcelebrityAnnotation.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				3D67288820D5EEB3004B610D /* Main.storyboard */,
+				3D3A4BD520DF333E00D68DDA /* reportView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			files = (
 				3D67289120D87F96004B610D /* ShareView.swift in Sources */,
 				3D70D2A820D589C400229C1E /* MenuBtnView.swift in Sources */,
+				3D3A4BD620DF333E00D68DDA /* reportView.swift in Sources */,
 				3D82E3F720D07418008DD653 /* WelcomeViewController.swift in Sources */,
 				3D3A4BD420DF0DE000D68DDA /* mapRect.swift in Sources */,
 				3D6488FC20D097D100E9B886 /* ButtonClicked.swift in Sources */,
