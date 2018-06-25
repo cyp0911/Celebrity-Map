@@ -120,11 +120,11 @@ class ShareView {
     @IBAction func listButtonCliked(_ sender: UIButton) {
         
         let currentView = getCurrentViewController()
-//        let shareURL = NSURL(string: "https://itunes.apple.com/ca/app/google/id1401680756")
+        let shareURL = NSURL(string: "https://itunes.apple.com/ca/app/google/id1401680756")
         let image = currentAnnotationCelebrity.portrait
         
-        let text = "Do you konw \(currentAnnotationCelebrity.name) is a \(currentAnnotationCelebrity.category ?? "???") celebrity come from \(currentAnnotationCelebrity.address ?? "??"). Check your interest celebrity with IOS APP: Celebrity Map!"
-        let active = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+        let text = "\(currentAnnotationCelebrity.name) is \(currentAnnotationCelebrity.title) who come from \(currentAnnotationCelebrity.address ?? "??"). Check the celebrity hometown with IOS APP: Celebrity Map!"
+        let active = UIActivityViewController(activityItems: [image, text, shareURL!], applicationActivities: nil)
         active.popoverPresentationController?.sourceView = currentView?.view
         
         switch sender.tag {

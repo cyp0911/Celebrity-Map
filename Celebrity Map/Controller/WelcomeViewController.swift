@@ -35,7 +35,7 @@ final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
     
 }
 
-class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, notifyViewDelegate {
+class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, notifyViewDelegate, reportDelegate {
     
     //some view Init
     var menuView: MenuBtnView?
@@ -108,6 +108,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         //Save current category index
         defaults.set(0, forKey: "selectedCategory")
+        
 
         //Set navigationbar
         setNavgationBar()
@@ -121,8 +122,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         notifyView.delegate = self
 
         //Report view
-//        ReportView.startReportView(phoneFrame: self.view, botView: self.bounceDetailView, navigationBar: (self.navigationController?.navigationBar)!)
+        ReportView.startReportView(phoneFrame: self.view, botView: self.MainMapView, navigationBar: (self.navigationController?.navigationBar)!)
+        ReportView.delegate = self
         
+
         
         setBot()
         
@@ -132,8 +135,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         shareView.buildShareview(phoneFrame: view, frameOfTabBar: (tabBarController?.tabBar.frame)!, tabBarView: (self.tabBarController?.view)!)
         
         MainMapView.register(CelebrityAnnoView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-
-        
         
         
         SVProgressHUD.dismiss()
@@ -146,17 +147,15 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     //Write the didUpdateLocations method here:
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        
-        
-        
         let location = locations[locations.count - 1]
         
         self.userLocation = location
         
         userLocation(location: location)
         
-        
         self.MainMapView.showsUserLocation = true
+        
+
         
     }
     
@@ -214,6 +213,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     }else{
                         self.refreshBtn.isHidden = true
                     }
+                    // Load reportView
+                if self.userLocation != nil && self.celebrityArray.count > 0{
+                        self.nearestReport()
+                    }
                 
                     // Loading progress show
                     SVProgressHUD.dismiss()
@@ -248,9 +251,11 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 
             
             // juage if shop on maprect: must in maprect
-            if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
-                
-                MainMapView.addAnnotation(pin)
+            if mapingRect != nil {
+                if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
+                    
+                    MainMapView.addAnnotation(pin)
+                }
             }
             
 //            else{
@@ -264,6 +269,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //MARK - Back to user location
     func userLocation(location : CLLocation){
+        
         if location.horizontalAccuracy > 0 {
             self.locationManager.stopUpdatingLocation()
             
@@ -271,6 +277,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             let userLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
             let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation, span)
             MainMapView.setRegion(region, animated: true)
+            
         }
     }
     
@@ -491,6 +498,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         locatedButton.clipsToBounds = true
         locatedButton.layer.borderColor = UIColor.white.cgColor
         locatedButton.layer.borderWidth = 5.0
+        locatedButton.layer.zPosition = 2
         locatedButton.addTarget(self, action: #selector(locatedMeButtonClicked), for: .touchUpInside)
         self.view.addSubview(locatedButton)
         
@@ -564,10 +572,10 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             
 
             
-            
             if eventAnnotation.celebrity.portrait == UIImage(named: "blank_portrait")! || problemOccur == 1{
                     if let url = URL(string: "\(eventAnnotation.celebrity.imageUrl!)"){
                     do {
+                        SVProgressHUD.show()
                         let data: Data = try Data(contentsOf: url)
                         if var imageTempo = UIImage(data: data){
                             let imageHeightIndex = imageTempo.size.height
@@ -578,7 +586,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                             _ = saveImage(image: imageTempo, name: "\(eventAnnotation.celebrity.name)")
                             eventAnnotation.celebrity.portrait = imageTempo
                             problemOccur = 0}
-
+                        SVProgressHUD.dismiss()
                     } catch {
                         // error handling
                         eventAnnotation.celebrity.portrait = UIImage(named: "blank_portrait")!
@@ -586,7 +594,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     
                 }
             }
-            
             //Set the imageview on bot frame
             self.botImageView.image = eventAnnotation.celebrity.portrait
             botViewAnimation()
@@ -778,6 +785,69 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
         
         return image
+    }
+    
+    func reportOn(){
+        locatedButton.isHidden = true
+    }
+    
+    func reportOff(){
+        locatedButton.isHidden = false
+        shareView.blackBackground.isHidden = true
+    }
+    
+    var shortestCelebrityName = ""
+    func nearestReport(){
+        
+        
+        var shortestDistance = 100000000.0
+        var shortestCelebrity = Celebrity()
+                
+        for celebrityItem in celebrityArray{
+            
+            if (userLocation?.distance(from: celebrityItem.hometownLatlng!))! < shortestDistance{
+                shortestDistance = (userLocation?.distance(from: celebrityItem.hometownLatlng!))!
+                shortestCelebrity = celebrityItem
+            }
+        }
+        
+        if let url = URL(string: "\(shortestCelebrity.imageUrl!)"){
+            do {
+                let data: Data = try Data(contentsOf: url)
+                if var imageTempo = UIImage(data: data){
+                    let imageHeightIndex = imageTempo.size.height
+                    
+                    
+                    imageTempo = cropToBounds(image: imageTempo, width: Double(imageHeightIndex * 3 / 4), height: Double(imageHeightIndex))
+                    
+                    _ = saveImage(image: imageTempo, name: "\(shortestCelebrity.name)")
+                    shortestCelebrity.portrait = imageTempo
+                }
+                
+            } catch {
+                // error handling
+                shortestCelebrity.portrait = UIImage(named: "blank_portrait")!
+            }
+        }
+        
+        let storedNearest = self.defaults.string(forKey: "nearest")
+        if (storedNearest != nil){
+            print("store: \(storedNearest!)")
+        }
+        
+        if storedNearest == shortestCelebrity.name{
+            print("store: 111")
+        }else{
+            print("store: 222")
+            
+            ReportView.callOutSet(type: 0, name: "\(shortestCelebrity.name)", address: "\(shortestCelebrity.address ?? "???")", distance: shortestDistance, image: shortestCelebrity.portrait, shortest: shortestCelebrity)
+            
+            locatedButton.isHidden = true
+            ReportView.motherView.isHidden = false
+
+            self.defaults.set(shortestCelebrity.name, forKey: "nearest")
+        }
+        
     }
     
     
