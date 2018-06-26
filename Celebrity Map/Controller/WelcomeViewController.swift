@@ -225,6 +225,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     
+    // Array to store place celebrity
+    var placedPin = [String]()
     
     //MARK - Set annotation from all data in array
     func loadCelebrityAnnotation() -> Void {
@@ -244,17 +246,22 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         if ifRefreshOutside {
             MainMapView.removeAnnotations(MainMapView.annotations)
+            placedPin.removeAll()
         }
         
         for celebrityItem in celebrityArray {
-            pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.address, celebrity: celebrityItem)
+            
+            if !placedPin.contains(celebrityItem.name){
+                pin = CelebrityAnnotaion(coordinate: (celebrityItem.hometownLatlng!.coordinate), title: celebrityItem.name, subtitle: celebrityItem.address, celebrity: celebrityItem)
 
             
-            // juage if shop on maprect: must in maprect
-            if mapingRect != nil {
-                if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
-                    
-                    MainMapView.addAnnotation(pin)
+                // juage if shop on maprect: must in maprect
+                if mapingRect != nil {
+                    if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
+                            MainMapView.addAnnotation(pin)
+                            placedPin.append(pin.title!)
+                            print("contains\(placedPin)")
+                    }
                 }
             }
             
@@ -836,10 +843,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
         
         if storedNearest == shortestCelebrity.name{
-            print("store: 111")
-        }else{
-            print("store: 222")
             
+        }else{
             ReportView.callOutSet(type: 0, name: "\(shortestCelebrity.name)", address: "\(shortestCelebrity.address ?? "???")", distance: shortestDistance, image: shortestCelebrity.portrait, shortest: shortestCelebrity)
             
             locatedButton.isHidden = true
@@ -847,7 +852,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 
             self.defaults.set(shortestCelebrity.name, forKey: "nearest")
         }
-        
     }
     
     
