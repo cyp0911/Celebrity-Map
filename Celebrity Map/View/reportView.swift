@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import FirebaseDatabase
 import SVProgressHUD
+import UserNotifications
 
 protocol reportDelegate{
     func reportOn()
@@ -143,7 +144,7 @@ class reportView{
             
             let attrs2 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 40), NSAttributedStringKey.foregroundColor : UIColor.red]
             
-            let attributedString1 = NSMutableAttributedString(string:"Congratulations: Your stand in the hometown of\n", attributes:attrs1)
+            let attributedString1 = NSMutableAttributedString(string:"Congratulations: You are standing in the hometown of\n", attributes:attrs1)
             
             let attributedString2 = NSMutableAttributedString(string:"\(shortest.title): \(shortest.name)\n", attributes:attrs2)
             
@@ -154,6 +155,9 @@ class reportView{
             attributedString1.append(attributedString3)
             
             self.distanceLabel.attributedText = attributedString1
+            
+            createNotification(name: shortest.name, address: shortest.address!)
+
 
         }else{
             let attrs1 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 30), NSAttributedStringKey.foregroundColor : UIColor.black]
@@ -220,7 +224,21 @@ class reportView{
         return nil
     }
 
-
-    
+    func createNotification(name: String, address: String){
+        let content = UNMutableNotificationContent()
+        content.title = "Your location is \(name)'s Hometown!"
+//        content.subtitle = "\(address) checkin at APP"
+        content.body = "checkin: \(address) at APP and share to your friends!"
+        content.sound = UNNotificationSound.default()
+        content.badge = 1
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3.0, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "id", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            print("notification\(error as Any)")
+        }
+    }
 }
 

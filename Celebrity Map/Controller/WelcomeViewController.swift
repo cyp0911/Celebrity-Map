@@ -137,6 +137,9 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         MainMapView.register(CelebrityAnnoView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         
+        //Mark - Notification Module
+        
+        
         SVProgressHUD.dismiss()
         
     }
@@ -853,6 +856,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             self.defaults.set(shortestCelebrity.name, forKey: "nearest")
         }
     }
+    
+        
     
     
 }

@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //change the bar title color
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.white]
+
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (success, error) in
+            if error != nil{
+                print("Authorization Failed")
+            }else{
+                print("Authorization Good")
+            }
+        }
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
 
         
         return true
@@ -40,11 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
 
     }
 
