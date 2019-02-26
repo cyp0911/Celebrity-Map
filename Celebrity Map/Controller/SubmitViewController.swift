@@ -117,8 +117,8 @@ UIPickerViewDataSource, UITextFieldDelegate {
             celebrityDataModel.parseJSON(json: returnJson)
             celebrityDataModel.saveToFirebase()
                 
-            let alert = UIAlertController(title: "Alert", message: "Entry succeed", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Good")
+            let alert = UIAlertController(title: "Alert", message: "Entry succeed", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in print("Good")
                 
                 self.titles.isEnabled = false
                 self.nameTextField.isEnabled = false
@@ -140,8 +140,8 @@ UIPickerViewDataSource, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
                 
             }else{
-                let alert = UIAlertController(title: "Alert", message: "Entry failed", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(alert: UIAlertAction!) in print("Failed")}))
+                let alert = UIAlertController(title: "Alert", message: "Entry failed", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in print("Failed")}))
                 self.present(alert, animated: true, completion: nil)
             }
         }

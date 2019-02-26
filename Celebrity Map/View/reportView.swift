@@ -141,9 +141,9 @@ class reportView{
         }
         
         if locationin{
-            let attrs1 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 30), NSAttributedStringKey.foregroundColor : UIColor.black]
+            let attrs1 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 30), NSAttributedString.Key.foregroundColor : UIColor.black]
             
-            let attrs2 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 40), NSAttributedStringKey.foregroundColor : UIColor.red]
+            let attrs2 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40), NSAttributedString.Key.foregroundColor : UIColor.red]
             
             let attributedString1 = NSMutableAttributedString(string:"Congratulations: You are standing in the hometown of\n", attributes:attrs1)
             
@@ -161,9 +161,9 @@ class reportView{
 
 
         }else{
-            let attrs1 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 30), NSAttributedStringKey.foregroundColor : UIColor.black]
+            let attrs1 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 30), NSAttributedString.Key.foregroundColor : UIColor.black]
 
-            let attrs2 = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 40), NSAttributedStringKey.foregroundColor : UIColor.red]
+            let attrs2 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40), NSAttributedString.Key.foregroundColor : UIColor.red]
 
             let attributedString1 = NSMutableAttributedString(string:"Nearest celebrity alert: \n", attributes:attrs1)
             
@@ -231,7 +231,7 @@ class reportView{
         content.title = "Your location is \(name)'s Hometown!"
 //        content.subtitle = "\(address) checkin at APP"
         content.body = "checkin: \(address) at APP and share to your friends!"
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         content.badge = 1
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300.0, repeats: false)

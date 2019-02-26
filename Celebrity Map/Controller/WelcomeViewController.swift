@@ -283,9 +283,9 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         if location.horizontalAccuracy > 0 {
             self.locationManager.stopUpdatingLocation()
             
-            let span:MKCoordinateSpan = MKCoordinateSpanMake(10, 10)
+            let span:MKCoordinateSpan = MKCoordinateSpan.init(latitudeDelta: 10, longitudeDelta: 10)
             let userLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation, span)
+            let region:MKCoordinateRegion = MKCoordinateRegion.init(center: userLocation, span: span)
             MainMapView.setRegion(region, animated: true)
             
         }
@@ -621,8 +621,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var ifRefreshOutside : Bool = false
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let rect = MainMapView.visibleMapRect
-        let mapPoint = MKMapPointMake(rect.origin.x, rect.origin.y)
-        let coordinate = MKCoordinateForMapPoint(mapPoint)
+        let mapPoint = MKMapPoint.init(x: rect.origin.x, y: rect.origin.y)
+        let coordinate = mapPoint.coordinate
 //        print("Top : \(coordinate.latitude)")
 //        print("Left : \(coordinate.longitude)")
 //
@@ -739,7 +739,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //MARK - Save and Load Image locally
     func saveImage(image: UIImage, name: String) -> Bool {
-        guard let data = UIImageJPEGRepresentation(image, 1) ?? UIImagePNGRepresentation(image) else {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
             return false
         }
         guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
@@ -882,7 +882,7 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 extension MKMapView {
     
     func contains(coordinate: CLLocationCoordinate2D) -> Bool {
-        return MKMapRectContainsPoint(self.visibleMapRect, MKMapPointForCoordinate(coordinate))
+        return self.visibleMapRect.contains(MKMapPoint.init(coordinate))
     }
     
 }

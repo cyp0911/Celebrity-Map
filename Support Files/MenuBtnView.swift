@@ -150,7 +150,7 @@ class MenuBtnView: UIView {
         let animationgroup = CAAnimationGroup()
         animationgroup.animations = [scaleAnimation, opacityAnimation]
         animationgroup.duration = 0.3
-        animationgroup.fillMode = kCAFillModeForwards
+        animationgroup.fillMode = CAMediaTimingFillMode.forwards
         
         return animationgroup
     }
