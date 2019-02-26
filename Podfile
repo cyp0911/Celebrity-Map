@@ -13,5 +13,7 @@ target 'Celebrity Map' do
     pod 'Firebase/Database'
     pod 'Dropdowns'
     pod 'RKDropdownAlert'
+    pod 'WechatOpenSDK'
+    pod 'Firebase/Messaging'
 
 end

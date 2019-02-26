@@ -132,6 +132,10 @@ class ShareView {
             currentView?.present(active, animated: true, completion: nil)
         case 2:
             currentView?.present(active, animated: true, completion: nil)
+        case 4:
+            shareToWechat(scenes: 1)
+        case 5:
+            shareToWechat(scenes: 0)
         default:
             currentView?.present(active, animated: true, completion: nil)
         }
@@ -200,5 +204,54 @@ class ShareView {
         return nil
     }
     
-}
+//    func shareToWChat(scene: WXScene) {
+//        let page = WXWebpageObject()
+//        page.webpageUrl = content.url
+//
+//        let msg = WXMediaMessage()
+//        msg.mediaObject = page
+//        msg.title = (scene == WXSceneTimeline ? content.title : content.userName)
+//        msg.description = content.title
+//
+//        switch dataType {
+//        case .GoodArticle:
+//            msg.setThumbImage(Data.sharedManager.goodArticle.imagedic[content.contentImg])
+//        case .SearchArticle:
+//            msg.setThumbImage(Data.sharedManager.searchArticle.imagedic[content.contentImg])
+//        default:
+//            print("data type error")
+//        }
+//
+//        let req = SendMessageToWXReq()
+//        req.message = msg
+//        req.scene = Int32(scene.rawValue)
+//        WXApi.sendReq(req)
+//    }
+    
+    func shareToWechat(scenes: Int){
+        
+        let message = WXMediaMessage()
+        message.setThumbImage(currentAnnotationCelebrity.portrait)
+        
+        let ext = WXWebpageObject()
+        ext.webpageUrl = "https://itunes.apple.com/ca/app/google/id1401680756"
+        message.mediaObject = ext
+        
+        let req = SendMessageToWXReq()
+        req.bText = false
+        req.message = message
+        if scenes == 0 {
+            req.scene = Int32(WXSceneSession.rawValue)
+            message.description = "\(currentAnnotationCelebrity.title): \(currentAnnotationCelebrity.name) is from \(currentAnnotationCelebrity.address!)."
+            message.title = "名人地图---名人出生地信息"
+        }else{
+            req.scene = Int32(WXSceneTimeline.rawValue)
+            message.description = "名人地图---名人出生地信息"
+            message.title = "\(currentAnnotationCelebrity.title): \(currentAnnotationCelebrity.name) is from \(currentAnnotationCelebrity.address!)."
 
+        }
+        WXApi.send(req)
+        
+    }
+
+}

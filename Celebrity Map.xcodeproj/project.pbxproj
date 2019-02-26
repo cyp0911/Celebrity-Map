@@ -29,6 +29,13 @@
 		3D82E40220D0741A008DD653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82E40020D0741A008DD653 /* LaunchScreen.storyboard */; };
 		3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40D20D07A1C008DD653 /* MapKit.framework */; };
 		3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D82E40F20D07B3C008DD653 /* CoreLocation.framework */; };
+		3D88425D20E5A43400F01697 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88425C20E5A43400F01697 /* SystemConfiguration.framework */; };
+		3D88425F20E5A43F00F01697 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88425E20E5A43F00F01697 /* Security.framework */; };
+		3D88426120E5A44900F01697 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88426020E5A44900F01697 /* CFNetwork.framework */; };
+		3D88426320E5A45200F01697 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88426220E5A45200F01697 /* CoreTelephony.framework */; };
+		3D88426520E5A48A00F01697 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88426420E5A48A00F01697 /* libz.tbd */; };
+		3D88426720E5A49900F01697 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88426620E5A49900F01697 /* libsqlite3.0.tbd */; };
+		3D88426920E5A4A900F01697 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D88426820E5A4A900F01697 /* libc++.tbd */; };
 		F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +65,14 @@
 		3D82E40320D0741A008DD653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D82E40D20D07A1C008DD653 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3D82E40F20D07B3C008DD653 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3D88425C20E5A43400F01697 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3D88425E20E5A43F00F01697 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3D88426020E5A44900F01697 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3D88426220E5A45200F01697 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		3D88426420E5A48A00F01697 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3D88426620E5A49900F01697 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		3D88426820E5A4A900F01697 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		3DA9593920ED44AE00AF2445 /* Celebrity Map.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Celebrity Map.entitlements"; sourceTree = "<group>"; };
 		8F11D5D9D077B5D6E7F49A86 /* Pods-Celebrity Map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.release.xcconfig"; sourceTree = "<group>"; };
 		A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celebrity_Map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF0101CEFA53A5E5F6AF132A /* Pods-Celebrity Map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celebrity Map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celebrity Map/Pods-Celebrity Map.debug.xcconfig"; sourceTree = "<group>"; };
@@ -68,6 +83,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D88426920E5A4A900F01697 /* libc++.tbd in Frameworks */,
+				3D88426720E5A49900F01697 /* libsqlite3.0.tbd in Frameworks */,
+				3D88426520E5A48A00F01697 /* libz.tbd in Frameworks */,
+				3D88426320E5A45200F01697 /* CoreTelephony.framework in Frameworks */,
+				3D88426120E5A44900F01697 /* CFNetwork.framework in Frameworks */,
+				3D88425F20E5A43F00F01697 /* Security.framework in Frameworks */,
+				3D88425D20E5A43400F01697 /* SystemConfiguration.framework in Frameworks */,
 				3D82E41020D07B3C008DD653 /* CoreLocation.framework in Frameworks */,
 				3D82E40E20D07A1C008DD653 /* MapKit.framework in Frameworks */,
 				F93F37965A4C06FB9CF56D9A /* Pods_Celebrity_Map.framework in Frameworks */,
@@ -124,6 +146,7 @@
 		3D82E3F320D07418008DD653 /* Celebrity Map */ = {
 			isa = PBXGroup;
 			children = (
+				3DA9593920ED44AE00AF2445 /* Celebrity Map.entitlements */,
 				3D6488FA20D097BA00E9B886 /* Extentions */,
 				3D82E40B20D07455008DD653 /* Model */,
 				3D82E40A20D07453008DD653 /* View */,
@@ -167,6 +190,13 @@
 		3D82E40C20D07A1C008DD653 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D88426820E5A4A900F01697 /* libc++.tbd */,
+				3D88426620E5A49900F01697 /* libsqlite3.0.tbd */,
+				3D88426420E5A48A00F01697 /* libz.tbd */,
+				3D88426220E5A45200F01697 /* CoreTelephony.framework */,
+				3D88426020E5A44900F01697 /* CFNetwork.framework */,
+				3D88425E20E5A43F00F01697 /* Security.framework */,
+				3D88425C20E5A43400F01697 /* SystemConfiguration.framework */,
 				3D82E40F20D07B3C008DD653 /* CoreLocation.framework */,
 				3D82E40D20D07A1C008DD653 /* MapKit.framework */,
 				A8AB3DA0772F5D479AE7CE79 /* Pods_Celebrity_Map.framework */,
@@ -219,7 +249,13 @@
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 0930;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -287,6 +323,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Dropdowns/Dropdowns.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RKDropdownAlert/RKDropdownAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -298,6 +335,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dropdowns.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RKDropdownAlert.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -469,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Celebrity Map/Celebrity Map.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7WT85VGQ9M;
 				INFOPLIST_FILE = "Celebrity Map/Info.plist";
@@ -476,6 +515,60 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"sqlite3.0\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Dropdowns\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreDiagnostics\"",
+					"-framework",
+					"\"FirebaseDatabase\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"FirebaseNanoPB\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"RKDropdownAlert\"",
+					"-framework",
+					"\"SVProgressHUD\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yinpeng.Celebrity-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,6 +585,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Celebrity Map/Celebrity Map.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7WT85VGQ9M;
 				INFOPLIST_FILE = "Celebrity Map/Info.plist";
@@ -499,6 +593,60 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"sqlite3.0\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Dropdowns\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreDiagnostics\"",
+					"-framework",
+					"\"FirebaseDatabase\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"FirebaseNanoPB\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"RKDropdownAlert\"",
+					"-framework",
+					"\"SVProgressHUD\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yinpeng.Celebrity-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";

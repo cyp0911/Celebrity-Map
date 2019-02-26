@@ -857,6 +857,23 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
     }
     
+//    func sendLink(){
+//        let message =  WXMediaMessage()
+//        
+//        message.title = "欢迎访问 hangge.com"
+//        message.description = "做最好的开发者知识平台。分享各种编程开发经验。"
+//        message.setThumbImage(UIImage(named:"apple.png"))
+//        
+//        let ext =  WXWebpageObject()
+//        ext.webpageUrl = "http://hangge.com"
+//        message.mediaObject = ext
+//        
+//        let req =  SendMessageToWXReq()
+//        req.bText = false
+//        req.message = message
+//        req.scene = scene
+//        WXApi.send(req)
+//    }
         
     
     

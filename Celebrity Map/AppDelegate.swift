@@ -9,36 +9,59 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseCore
 import UserNotifications
+import FirebaseMessaging
+import FirebaseInstanceID
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FirebaseApp.configure()
         UIApplication.shared.statusBarStyle = .lightContent
         
         //change the bar title color
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.white]
+        
+        //Remote Push Notification Configuration
+        
+        FirebaseApp.configure()
 
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (success, error) in
             if error != nil{
                 print("Authorization Failed")
             }else{
                 print("Authorization Good")
+                UNUserNotificationCenter.current().delegate = self
+                Messaging.messaging().delegate = self
+                application.registerForRemoteNotifications()
             }
         }
+        
+
         
         UIApplication.shared.applicationIconBadgeNumber = 0
 
         
+        // weChat
+        WXApi.registerApp("wxb2569af0eeceb0cb")
+
+        
         return true
     }
-
+    
+    func ConnectToFCM(){
+        Messaging.messaging().shouldEstablishDirectChannel = true
+    }
+    
+//    didrefres
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -47,6 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        Messaging.messaging().shouldEstablishDirectChannel = false
+        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -57,6 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        ConnectToFCM()
 
 
     }
@@ -111,6 +139,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    
+    //微信分享完毕后的回调（只有使用真实的AppID才能收到响应）
+    func onResp(_ resp: BaseResp!) {
+        if resp.isKind(of: SendMessageToWXResp.self) {//确保是对我们分享操作的回调
+            if resp.errCode == WXSuccess.rawValue{//分享成功
+                print("分享成功")
+            }else if resp.errCode == WXErrCodeCommon.rawValue {//普通错误类型
+                print("分享失败：普通错误类型")
+            }else if resp.errCode == WXErrCodeUserCancel.rawValue {//用户点击取消并返回
+                print("分享失败：用户点击取消并返回")
+            }else if resp.errCode == WXErrCodeSentFail.rawValue {//发送失败
+                print("分享失败：发送失败")
+            }else if resp.errCode == WXErrCodeAuthDeny.rawValue {//授权失败
+                print("分享失败：授权失败")
+            }else if resp.errCode == WXErrCodeUnsupport.rawValue {//微信不支持
+                print("分享失败：微信不支持")
+            }
+        }
+    }
+    
+    //MARK - Push remote notification
+    
 }
 

@@ -128,6 +128,7 @@ class reportView{
     
     var shortestCelebrity = Celebrity()
     var shortestDistance = Double()
+    
     func callOutSet(type: Int, name: String, address: String, distance: Double?, image: UIImage, shortest: Celebrity){
         shortestCelebrity = shortest
         
@@ -202,6 +203,7 @@ class reportView{
         }else{
             text = "Nearest celebrity: \(shortestDistance) km distance from me: \(shortestCelebrity.address!) - the hometown of \(shortestCelebrity.name)\nwho is famous \(shortestCelebrity.title)"
         }
+        
         let active = UIActivityViewController(activityItems: [image, text, shareURL!], applicationActivities: nil)
         active.popoverPresentationController?.sourceView = currentView?.view
         currentView?.present(active, animated: true, completion: nil)
@@ -232,7 +234,7 @@ class reportView{
         content.sound = UNNotificationSound.default()
         content.badge = 1
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3.0, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300.0, repeats: false)
         
         let request = UNNotificationRequest(identifier: "id", content: content, trigger: trigger)
         
@@ -240,5 +242,32 @@ class reportView{
             print("notification\(error as Any)")
         }
     }
+    
+//    //Mark - ShareToWechat
+//    func shareToWechat(scenes: Int){
+//        
+//        let message = WXMediaMessage()
+//        message.setThumbImage(currentAnnotationCelebrity.portrait)
+//        
+//        let ext = WXWebpageObject()
+//        ext.webpageUrl = "https://itunes.apple.com/ca/app/google/id1401680756"
+//        message.mediaObject = ext
+//        
+//        let req = SendMessageToWXReq()
+//        req.bText = false
+//        req.message = message
+//        if scenes == 0 {
+//            req.scene = Int32(WXSceneSession.rawValue)
+//            message.description = "\(currentAnnotationCelebrity.title): \(currentAnnotationCelebrity.name) is from \(currentAnnotationCelebrity.address!)."
+//            message.title = "名人地图---名人出生地信息"
+//        }else{
+//            req.scene = Int32(WXSceneTimeline.rawValue)
+//            message.description = "名人地图---名人出生地信息"
+//            message.title = "\(currentAnnotationCelebrity.title): \(currentAnnotationCelebrity.name) is from \(currentAnnotationCelebrity.address!)."
+//            
+//        }
+//        WXApi.send(req)
+//        
+//    }
 }
 

@@ -9,6 +9,9 @@ PODS:
   - Firebase/Database (5.2.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (= 5.0.1)
+  - Firebase/Messaging (5.2.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.0.2)
   - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
@@ -21,7 +24,14 @@ PODS:
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (3.1.0):
     - FirebaseCore (~> 5.0)
+  - FirebaseMessaging (3.0.2):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - leveldb-library (1.20)
@@ -30,18 +40,22 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Protobuf (3.6.0)
   - RKDropdownAlert (0.3.0)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.1.0)
+  - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
   - Alamofire
   - Dropdowns
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - RKDropdownAlert
   - SVProgressHUD
   - SwiftyJSON
+  - WechatOpenSDK
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -52,12 +66,15 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
+    - FirebaseMessaging
     - GoogleToolboxForMac
     - leveldb-library
     - nanopb
+    - Protobuf
     - RKDropdownAlert
     - SVProgressHUD
     - SwiftyJSON
+    - WechatOpenSDK
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -67,13 +84,16 @@ SPEC CHECKSUMS:
   FirebaseCore: a3c87242451633fff8490183898075ce77d168d2
   FirebaseDatabase: 482bad9c2abd422bb2321194fb8c937e67426a89
   FirebaseInstanceID: 05d779cbb97bd5bd5c51a38a903fc9cfe1b2454a
+  FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   RKDropdownAlert: f4b3364c251829ad439dc666836a1f2dad26f4c7
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 63638115edd9e37f3be46748427b61eca6d91ea6
+PODFILE CHECKSUM: 07f558d587287eca7ca188f8d273dbeec1e8f988
 
 COCOAPODS: 1.5.3
