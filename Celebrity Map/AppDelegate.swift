@@ -13,17 +13,60 @@ import FirebaseCore
 import UserNotifications
 import FirebaseMessaging
 import FirebaseInstanceID
+import AppsFlyerLib
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate, AppsFlyerTrackerDelegate {
+    
+    @objc func sendLaunch(app:Any) {
+        AppsFlyerTracker.shared().trackAppLaunch()
+    }
+    
+    
+    
+    func onConversionDataSuccess(_ data: [AnyHashable: Any]) {
+        print("\(data)")
+        if let status = data["af_status"] as? String{
+            if(status == "Non-organic"){
+                if let sourceID = data["media_source"] , let campaign = data["campaign"]{
+                    print("This is a Non-Organic install. Media source: \(sourceID)  Campaign: \(campaign)")
+                }
+            } else {
+                print("This is an organic install.")
+            }
+            if let is_first_launch = data["is_first_launch"] , let launch_code = is_first_launch as? Int {
+                if(launch_code == 1){
+                    print("First Launch")
+                } else {
+                    print("Not First Launch")
+                }
+            }
+        }
+    }
+    
+    func onConversionDataFail(_ error: Error) {
+        print("\(error)")
+    }
+    
+    //Handle Direct Deep Link
+    func onAppOpenAttribution(_ attributionData: [AnyHashable: Any]) {
+        //Handle Deep Link Data
+        print("onAppOpenAttribution data:")
+        for (key, value) in attributionData {
+            print(key, ":",value)
+        }
+    }
+    func onAppOpenAttributionFailure(_ error: Error) {
+        print("\(error)")
+    }
+    
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
         
         //change the bar title color
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white]
@@ -51,6 +94,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         // weChat
         WXApi.registerApp("wxb2569af0eeceb0cb")
+        
+        AppsFlyerTracker.shared().appsFlyerDevKey = "BZYCxNnRbkPvSPUYxnKoHR"
+        AppsFlyerTracker.shared().appleAppID = "1401680756"
+        AppsFlyerTracker.shared().delegate = self
+        /* Set isDebug to true to see AppsFlyer debug logs */
+        AppsFlyerTracker.shared().isDebug = true
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendLaunch),
+                                               // For Swift version < 4.2 replace name argument with the commented out code
+            name: UIApplication.didBecomeActiveNotification, //.UIApplicationDidBecomeActive for Swift < 4.2
+            object: nil)
 
         
         return true
@@ -159,6 +214,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             }
         }
     }
+    
+    // Open URI-scheme for iOS 9 and above
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        AppsFlyerTracker.shared().handleOpen(url, options: options)
+        return true
+    }
+    
+    // Report Push Notification attribution data for re-engagements
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        AppsFlyerTracker.shared().handlePushNotification(userInfo)
+    }
+    
+    
     
     //MARK - Push remote notification
     

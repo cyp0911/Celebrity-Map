@@ -15,5 +15,5 @@ target 'Celebrity Map' do
     pod 'RKDropdownAlert'
     pod 'WechatOpenSDK'
     pod 'Firebase/Messaging'
-
+    pod 'AppsFlyerFramework'		
 end

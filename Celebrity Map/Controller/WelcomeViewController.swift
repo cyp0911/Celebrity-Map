@@ -87,6 +87,8 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
 
         publishSwitch = "\(UIDevice.current.identifierForVendor?.uuidString ?? "noid")"
         
+        print("publicswitch")
+        
         //TODO:Set up the location manager here.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -175,7 +177,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 for(key, _) in celebrityDictionaries{
                     if let celebrityDictionary = celebrityDictionaries[key] as? [String : Any]{
                         if let newname = celebrityDictionary["title"]{
-                            print(newname)
                             let newCeleberity = Celebrity(name: celebrityDictionary["name"] as! String, hometownLatlng: CLLocation(latitude: celebrityDictionary["lat"] as! Double, longitude: celebrityDictionary["lng"] as! Double), title: celebrityDictionary["title"] as! String, category: celebrityDictionary["category"] as! String)
                             
                                 newCeleberity.getCreateTime(createTimeString: celebrityDictionary["createTime"] as! String)
@@ -263,7 +264,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     if (mapingRect?.checkIfInside(point: (celebrityItem.hometownLatlng?.coordinate)!))!{
                             MainMapView.addAnnotation(pin)
                             placedPin.append(pin.title!)
-                            print("contains\(placedPin)")
                     }
                 }
             }
@@ -362,7 +362,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             }
             
             
-            print(titleNames[index])
         })
         
         menuView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -623,21 +622,15 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         let rect = MainMapView.visibleMapRect
         let mapPoint = MKMapPoint.init(x: rect.origin.x, y: rect.origin.y)
         let coordinate = mapPoint.coordinate
-//        print("Top : \(coordinate.latitude)")
-//        print("Left : \(coordinate.longitude)")
-//
-//        print("Bot \(coordinate.latitude - mapView.region.span.latitudeDelta)")
-//        print("Right \(coordinate.longitude + mapView.region.span.longitudeDelta)")
+
         if let ifRefresh = mapingRect?.checkIfRefresh(newTop: coordinate.latitude, newBot: coordinate.latitude - mapView.region.span.latitudeDelta, newLeft: coordinate.longitude, newRight: coordinate.longitude + mapView.region.span.longitudeDelta, time: onlyOnceRemove){
             
             ifRefreshOutside = ifRefresh
-            print("ifRefresh: \(ifRefresh)")
 
         }
         
         mapingRect = mapRect(Top: coordinate.latitude, Bot: coordinate.latitude - mapView.region.span.latitudeDelta, Left: coordinate.longitude, Right: coordinate.longitude + mapView.region.span.longitudeDelta)
 //        let judge = mapingRect?.checkIfInside(point: CLLocationCoordinate2D(latitude: 44.6458149, longitude: -63.4534447))
-//        print("judge: \(judge!)")
         
         
         loadCelebrityAnnotation()
@@ -842,7 +835,6 @@ class WelcomeViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         let storedNearest = self.defaults.string(forKey: "nearest")
         if (storedNearest != nil){
-            print("store: \(storedNearest!)")
         }
         
         if storedNearest == shortestCelebrity.name{
