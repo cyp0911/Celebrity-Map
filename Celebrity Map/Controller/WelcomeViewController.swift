@@ -15,6 +15,8 @@ import FirebaseDatabase
 import Dropdowns
 import SVProgressHUD
 import RKDropdownAlert
+import AppsFlyerLib
+
 
 // MARK - Class to hold the info of annotation
 final class CelebrityAnnotaion: NSObject, MKAnnotation, MKMapViewDelegate {
