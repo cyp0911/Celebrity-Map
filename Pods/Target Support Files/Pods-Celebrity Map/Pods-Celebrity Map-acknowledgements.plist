@@ -43,6 +43,16 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2018 AppsFlyer Ltd. All rights reserved.</string>
+			<key>License</key>
+			<string>Proprietary</string>
+			<key>Title</key>
+			<string>AppsFlyerFramework</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Licensed under the **MIT** license
 
 &gt; Copyright (c) 2015 Hyper Interaktiv AS
