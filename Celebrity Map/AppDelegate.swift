@@ -228,7 +228,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     
     
+    
     //MARK - Push remote notification
     
 }
 
+
+// User logic
+fileprivate func walkToSceneWithParams(params: [AnyHashable:Any]) {
+    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
+
+    var fruitNameStr = ""
+
+    if let thisFruitName = params["fruit_name"] as? String {
+        fruitNameStr = thisFruitName
+    } else if let linkParam = params["link"] as? String {
+        guard let url = URLComponents(string: linkParam) else {
+            print("Could not extract query params from link")
+            return
+        }
+        if let thisFruitName = url.queryItems?.first(where: { $0.name == "fruit_name" })?.value {
+            fruitNameStr = thisFruitName
+        }
+    }
+
+    let destVC = fruitNameStr + "_vc"
+//    if let newVC = storyBoard.instantiateVC(withIdentifier: destVC) {
+//
+//        print("AppsFlyer routing to section: \(destVC)")
+//        newVC.attributionData = params
+//
+//        UIApplication.shared.windows.first?.rootViewController?.present(newVC, animated: true, completion: nil)
+//    } else {
+//        print("AppsFlyer: could not find section: \(destVC)")
+//    }
+}
